@@ -310,13 +310,15 @@ const SingleProject: React.FC<SingleProjectProps> = ({ projectId, onNavigate }) 
       {/* 1. HERO SECTION */}
       <section className="relative h-[85vh] w-full overflow-hidden bg-ag-green-950 flex flex-col justify-end">
         <div className="absolute inset-0 z-0">
-          <motion.img 
+          <motion.img
             initial={{ scale: 1.1, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 1.5 }}
-            src={project.heroImage} 
-            className="w-full h-full object-cover" 
-            alt={project.title} 
+            src={project.heroImage}
+            className="w-full h-full object-cover"
+            alt={project.title}
+            loading="eager"
+            fetchPriority="high"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-ag-green-950 via-ag-green-950/40 to-transparent" />
         </div>
@@ -679,7 +681,7 @@ const SingleProject: React.FC<SingleProjectProps> = ({ projectId, onNavigate }) 
                transition={{ type: 'spring', stiffness: 300 }}
                className="md:col-span-2 md:row-span-2 rounded-3xl overflow-hidden shadow-2xl relative group cursor-zoom-in"
              >
-                <img src={project.gallery[0]} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000" alt="Gallery 1" />
+                <img src={project.gallery[0]} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000" alt="Gallery 1" loading="eager" fetchPriority="high" />
                 <div className="absolute inset-0 bg-ag-green-950/20 group-hover:bg-transparent transition-colors duration-1000" />
              </motion.div>
              <motion.div 
@@ -687,7 +689,7 @@ const SingleProject: React.FC<SingleProjectProps> = ({ projectId, onNavigate }) 
                transition={{ type: 'spring', stiffness: 300 }}
                className="md:col-span-2 md:row-span-1 rounded-3xl overflow-hidden shadow-xl relative group cursor-zoom-in"
              >
-                <img src={project.gallery[1]} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000" alt="Gallery 2" />
+                <img src={project.gallery[1]} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000" alt="Gallery 2" loading="eager" fetchPriority="high" />
                 <div className="absolute inset-0 bg-ag-green-950/20 group-hover:bg-transparent transition-colors duration-1000" />
              </motion.div>
              <motion.div 
@@ -695,7 +697,7 @@ const SingleProject: React.FC<SingleProjectProps> = ({ projectId, onNavigate }) 
                transition={{ type: 'spring', stiffness: 300 }}
                className="md:col-span-1 md:row-span-1 rounded-3xl overflow-hidden shadow-lg relative group cursor-zoom-in"
              >
-                <img src={project.gallery[2]} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000" alt="Gallery 3" />
+                <img src={project.gallery[2]} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000" alt="Gallery 3" loading="eager" fetchPriority="high" />
                 <div className="absolute inset-0 bg-ag-green-950/20 group-hover:bg-transparent transition-colors duration-1000" />
              </motion.div>
              <motion.div 
@@ -703,7 +705,7 @@ const SingleProject: React.FC<SingleProjectProps> = ({ projectId, onNavigate }) 
                transition={{ type: 'spring', stiffness: 300 }}
                className="md:col-span-1 md:row-span-1 rounded-3xl overflow-hidden shadow-lg relative group cursor-zoom-in"
              >
-                <img src={project.gallery[3]} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000" alt="Gallery 4" />
+                <img src={project.gallery[3]} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000" alt="Gallery 4" loading="eager" fetchPriority="high" />
                 <div className="absolute inset-0 bg-ag-green-950/20 group-hover:bg-transparent transition-colors duration-1000" />
              </motion.div>
           </div>

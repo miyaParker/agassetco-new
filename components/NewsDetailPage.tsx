@@ -92,7 +92,7 @@ const NewsDetailPage: React.FC<NewsDetailPageProps> = ({ articleId, onNavigate }
           transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
           className="aspect-[21/9] rounded-[0.7rem] overflow-hidden shadow-2xl relative"
         >
-          <img src={article.image} alt={article.title} className="w-full h-full object-cover" />
+          <img src={article.image} alt={article.title} className="w-full h-full object-cover" loading="eager" fetchPriority="high" />
           <div className="absolute inset-0 bg-ag-green-950/10 mix-blend-multiply" />
         </motion.div>
       </section>
@@ -156,7 +156,7 @@ const NewsDetailPage: React.FC<NewsDetailPageProps> = ({ articleId, onNavigate }
              <div key={idx} className="group cursor-pointer">
                 {/* Updated border radius to 0.7rem */}
                 <div className="aspect-[16/10] rounded-[0.7rem] overflow-hidden mb-6 relative">
-                  <img src={item.img} alt={item.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                  <img src={item.img} alt={item.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" loading="eager" fetchPriority="high" />
                   <div className="absolute top-4 left-4">
                     <span className="bg-white px-3 py-1 rounded-full text-[9px] font-bold text-ag-green-950 uppercase tracking-widest">{item.cat}</span>
                   </div>

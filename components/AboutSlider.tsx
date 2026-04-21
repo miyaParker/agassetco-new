@@ -89,10 +89,12 @@ const AboutSlider: React.FC = () => {
                 
                 {/* Fixed Background Image Layer */}
                 <div className="absolute inset-0 z-0">
-                    <img 
-                        src={backgroundImage} 
-                        alt="Agricultural Landscape" 
+                    <img
+                        src={backgroundImage}
+                        alt="Agricultural Landscape"
                         className="w-full h-full object-cover grayscale mix-blend-multiply opacity-80"
+                        loading="eager"
+                        fetchPriority="high"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-ag-green-950 via-ag-green-900/50 to-ag-green-900/30"></div>
                 </div>

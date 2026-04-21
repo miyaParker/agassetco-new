@@ -71,6 +71,8 @@ const NewsSection: React.FC<NewsSectionProps> = ({ onNavigate }) => {
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.6, ease: "easeInOut" }}
                 className="absolute inset-0 w-full h-full object-cover"
+                loading="eager"
+                fetchPriority="high"
               />
             </AnimatePresence>
             

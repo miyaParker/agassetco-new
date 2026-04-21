@@ -184,10 +184,12 @@ const TeamPage: React.FC<TeamPageProps> = ({ onNavigate }) => {
           {/* Hero Image */}
           <motion.div variants={imageEntrance as any} className="relative w-full aspect-[21/9] md:aspect-[3/1] mb-16 group">
             <div className="absolute inset-0 rounded-[0.7rem] overflow-hidden bg-gray-100">
-              <img 
-                src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2940&auto=format&fit=crop" 
-                alt="AgAsset Team" 
+              <img
+                src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2940&auto=format&fit=crop"
+                alt="AgAsset Team"
                 className="w-full h-full object-cover grayscale transition-all duration-1000 group-hover:grayscale-0 group-hover:scale-105"
+                loading="eager"
+                fetchPriority="high"
               />
               <div className="absolute inset-0 bg-ag-green-950/10 group-hover:bg-transparent transition-colors duration-1000 mix-blend-multiply"></div>
             </div>
@@ -388,10 +390,12 @@ const TeamCard: React.FC<TeamCardProps> = ({ member, index, small = false }) => 
       className="group cursor-pointer"
     >
       <div className="aspect-[3/4] overflow-hidden rounded-[0.7rem] mb-6 bg-gray-100 relative shadow-md group-hover:shadow-xl transition-all duration-500">
-        <img 
-          src={member.img} 
-          alt={member.name} 
-          className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 group-hover:scale-105" 
+        <img
+          src={member.img}
+          alt={member.name}
+          className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 group-hover:scale-105"
+          loading="eager"
+          fetchPriority="high"
         />
         
         {/* LinkedIn Reveal Overlay */}

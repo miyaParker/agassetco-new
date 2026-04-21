@@ -20,9 +20,9 @@ const projects = [
     impact: ["SME Revenue +35%", "100% Diesel Displacement", "99.2% Operational Uptime"],
     sdgs: [7, 8, 9],
     images: [
-      "https://images.unsplash.com/photo-1600863073007-4228c2c842b0?q=80&w=2070&auto=format&fit=crop", 
-      "https://images.unsplash.com/photo-1625246333195-58197bd47f3b?q=80&w=2940&auto=format&fit=crop", 
-      "https://images.unsplash.com/photo-1595838788863-29a377d0a7d5?q=80&w=2874&auto=format&fit=crop"  
+      "https://images.unsplash.com/photo-1706770290344-b4a1ba7fc6b3?q=80&w=1335&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "https://images.unsplash.com/photo-1763800758293-40b0658f2141?q=80&w=1335&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "https://images.unsplash.com/photo-1686820740687-426a7b9b2043?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
     ]
   },
   {
@@ -166,7 +166,7 @@ const ProjectRow: React.FC<ProjectRowProps> = ({ project, isOpen, onClick, onDet
                       animate={{ opacity: 1, y: 0 }}
                       className="relative rounded-[0.7rem] overflow-hidden group/image aspect-[4/3]"
                     >
-                       <img src={project.images[0]} alt="Project Detail 1" className="w-full h-full object-cover transition-transform duration-700 group/image:scale-110" />
+                       <img src={project.images[0]} alt="Project Detail 1" className="w-full h-full object-cover transition-transform duration-700 group/image:scale-110" loading="eager" fetchPriority="high" />
                        <div className="absolute inset-0 bg-ag-green-950/10 group/image:bg-transparent transition-colors duration-300" />
                     </motion.div>
                     <div className="flex flex-col gap-4">
@@ -176,7 +176,7 @@ const ProjectRow: React.FC<ProjectRowProps> = ({ project, isOpen, onClick, onDet
                         transition={{ delay: 0.1 }}
                         className="relative rounded-[0.7rem] overflow-hidden group/image flex-1 min-h-[160px]"
                       >
-                         <img src={project.images[1]} alt="Project Detail 2" className="w-full h-full object-cover transition-transform duration-700 group/image:scale-110" />
+                         <img src={project.images[1]} alt="Project Detail 2" className="w-full h-full object-cover transition-transform duration-700 group/image:scale-110" loading="eager" fetchPriority="high" />
                       </motion.div>
                       <motion.div 
                         initial={{ opacity: 0, y: 20 }}
@@ -184,7 +184,7 @@ const ProjectRow: React.FC<ProjectRowProps> = ({ project, isOpen, onClick, onDet
                         transition={{ delay: 0.2 }}
                         className="relative rounded-[0.7rem] overflow-hidden group/image flex-1 min-h-[160px]"
                       >
-                         <img src={project.images[2]} alt="Project Detail 3" className="w-full h-full object-cover transition-transform duration-700 group/image:scale-110" />
+                         <img src={project.images[2]} alt="Project Detail 3" className="w-full h-full object-cover transition-transform duration-700 group/image:scale-110" loading="eager" fetchPriority="high" />
                       </motion.div>
                     </div>
                   </div>
