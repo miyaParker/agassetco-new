@@ -44,9 +44,9 @@ const PROJECTS = [
     type: "Lease-to-Own",
     sdgs: [7, 8, 9],
     images: [
-      "https://images.unsplash.com/photo-1600863073007-4228c2c842b0?q=80&w=2070&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1625246333195-58197bd47f3b?q=80&w=2940&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1595838788863-29a377d0a7d5?q=80&w=2874&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1706770290344-b4a1ba7fc6b3?q=80&w=1335&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "https://images.unsplash.com/photo-1763800758293-40b0658f2141?q=80&w=1335&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "https://images.unsplash.com/photo-1686820740687-426a7b9b2043?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
     ]
   },
   {

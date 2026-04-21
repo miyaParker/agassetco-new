@@ -16,28 +16,28 @@ const articles = [
     title: "Financing the Solar Transition",
     date: "March 12, 2025",
     excerpt: "How lease-to-own models are unlocking potential in rural Nigeria. We explore the financial structures that allow smallholder farmers to bypass the massive upfront costs of solar equipment.",
-    image: "https://images.unsplash.com/photo-1542601906990-b4d3fb7d5c73?q=80&w=2874&auto=format&fit=crop"
+    image: "https://images.unsplash.com/photo-1589201529153-5297335c1684?q=80&w=3132&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
   },
   {
     id: 2,
     title: "The Impact of Cold Chain Storage",
     date: "February 28, 2025",
     excerpt: "Reducing post-harvest losses by 40% through localized preservation. Our latest case study in Kaduna demonstrates how temperature-controlled logistics transforms vegetable value chains.",
-    image: "https://images.unsplash.com/photo-1586771107445-d3ca888129ff?q=80&w=2944&auto=format&fit=crop"
+    image: "https://images.unsplash.com/photo-1589201529153-5297335c1684?q=80&w=3132&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
   },
   {
     id: 3,
     title: "IoT in Remote Asset Management",
     date: "February 15, 2025",
     excerpt: "Why data visibility is the key to bankability. How we use real-time telemetry to track asset performance, predict maintenance needs, and secure investor confidence.",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2940&auto=format&fit=crop"
+    image: "https://images.unsplash.com/photo-1589201529153-5297335c1684?q=80&w=3132&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
   },
   {
     id: 4,
     title: "Scaling Mini-Grid Demand",
     date: "January 10, 2025",
     excerpt: "Solving the utilization puzzle for rural energy developers. By introducing productive use assets, we create the stable daytime loads necessary for mini-grid profitability.",
-    image: "https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?q=80&w=2874&auto=format&fit=crop"
+    image: "https://images.unsplash.com/photo-1589201529153-5297335c1684?q=80&w=3132&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
   }
 ];
 
