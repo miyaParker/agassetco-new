@@ -107,10 +107,12 @@ const About: React.FC = () => {
                   {isDark && (
                     <>
                       <div className="absolute inset-0 z-0">
-                        <img 
-                          src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=2832&auto=format&fit=crop" 
-                          alt="Background" 
+                        <img
+                          src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=2832&auto=format&fit=crop"
+                          alt="Background"
                           className="w-full h-full object-cover opacity-60 mix-blend-overlay grayscale transition-transform duration-700 hover:scale-105"
+                          loading="eager"
+                          fetchPriority="high"
                         />
                         <div className="absolute inset-0 bg-ag-green-950/85 mix-blend-multiply"></div>
                         <div className="absolute inset-0 bg-gradient-to-t from-ag-green-950 via-transparent to-transparent opacity-80"></div>
