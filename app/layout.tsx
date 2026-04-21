@@ -12,6 +12,7 @@ const outfit = Outfit({
 export const metadata: Metadata = {
   title: 'AgAsset Co | Energy for Growth',
   description: 'AgAsset Co — powering sustainable energy solutions across Africa.',
+  icons: { icon: '/favicon.ico' },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
