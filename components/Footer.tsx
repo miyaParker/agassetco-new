@@ -22,7 +22,7 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
       <div className="max-w-7xl mx-auto px-6">
         
         {/* 1. Top Columns */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-24">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-24">
           
           {/* Branding Column */}
           <div className="col-span-1 md:col-span-1 pr-8">
@@ -93,7 +93,7 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           </div>
 
           {/* Links 3 */}
-          {/* <div>
+          <div>
              <h4 className="font-bold mb-6 text-base uppercase tracking-widest text-gray-400">Connect</h4>
              <ul className="space-y-4 text-lg font-medium">
                {['LinkedIn', 'Twitter / X', 'Medium'].map(item => (
@@ -105,7 +105,7 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                  </li>
                ))}
              </ul>
-          </div> */}
+          </div>
 
         </div>
 
