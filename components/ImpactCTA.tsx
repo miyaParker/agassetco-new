@@ -4,8 +4,9 @@
 import React from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
+import type { TrustBarSection } from '@/lib/strapi/types';
 
-const PARTNERS = [
+const FALLBACK_PARTNERS = [
   "World Bank",
   "REA",
   "Agronomie",
@@ -13,13 +14,20 @@ const PARTNERS = [
   "Shell Foundation"
 ];
 
-const ImpactCTA: React.FC = () => {
+interface ImpactCTAProps {
+  data?: TrustBarSection | null;
+}
+
+const ImpactCTA: React.FC<ImpactCTAProps> = ({ data }) => {
   const { scrollYProgress } = useScroll();
   // Parallax movement
   const y = useTransform(scrollYProgress, [0, 1], [0, -100]);
 
   // Quadruple the array to ensure smooth infinite scrolling on large screens
-  const marqueePartners = [...PARTNERS, ...PARTNERS, ...PARTNERS, ...PARTNERS];
+  const partnerNames = data?.partners?.length 
+    ? data.partners.map(p => p.name) 
+    : FALLBACK_PARTNERS;
+  const marqueePartners = [...partnerNames, ...partnerNames, ...partnerNames, ...partnerNames];
 
   return (
     <section className="relative w-full overflow-hidden flex flex-col justify-center snap-start bg-ag-green-950 py-24">
@@ -62,7 +70,7 @@ const ImpactCTA: React.FC = () => {
             {/* Title */}
             <div className="text-center mb-8">
                <p className="text-xs font-bold text-ag-lime uppercase tracking-[0.2em] drop-shadow-sm">
-                 Trusted by Global Institutions & Infrastructure Leaders
+                 {data?.label || "Trusted by Global Institutions & Infrastructure Leaders"}
                </p>
             </div>
 

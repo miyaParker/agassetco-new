@@ -76,7 +76,7 @@ export default function HomePageClient({
       <HubAndSolutions data={ecosystemData} />
       <Portfolio data={projectsData} onNavigate={handleNavigate} />
       {/* <NewsSection onNavigate={handleNavigate} /> */}
-      <ImpactCTA />
+      <ImpactCTA data={trustBarData} />
     </motion.div>
   );
 }
