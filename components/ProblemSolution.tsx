@@ -5,8 +5,13 @@ import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { BatteryWarning, Wrench, Coins } from 'lucide-react';
 import SectionHeader from './SectionHeader';
+import type { TheChallengeSection } from '@/lib/strapi/types';
 
-const ProblemSolution: React.FC = () => {
+interface ProblemSolutionProps {
+  data?: TheChallengeSection | null;
+}
+
+const ProblemSolution: React.FC<ProblemSolutionProps> = ({ data }) => {
   const [activeTag, setActiveTag] = useState<string | null>(null);
   const containerRef = useRef<HTMLElement>(null);
 
@@ -44,8 +49,8 @@ const ProblemSolution: React.FC = () => {
         {/* Standardized Header */}
         <SectionHeader 
           number="02" 
-          category="The Challenge" 
-          title={<>The Systemic Failure of <span className="text-ag-lime">Rural Energy Markets.</span></>} 
+          category={data?.sectionLabel || "The Challenge"} 
+          title={data?.title || <>The Systemic Failure of <span className="text-ag-lime">Rural Energy Markets.</span></>} 
         />
 
         {/* Description Paragraph */}
@@ -80,11 +85,11 @@ const ProblemSolution: React.FC = () => {
                </div>
              </div>
              <div>
-               <div className="text-4xl font-medium text-white mb-4 leading-tight">
-                 The Utilization <br/><span className="text-ag-lime">Gap</span>
+               <div className="text-3xl font-medium text-white mb-4 leading-tight">
+                 {data?.challenge_card?.[0]?.title || <>The Utilization <br/><span className="text-ag-lime">Gap</span></>}
                </div>
                <p className="text-white/60 text-sm leading-relaxed font-light">
-                 Solar developers build expensive grids, but rural communities lack the machinery to consume enough power, making grids unprofitable.
+                 {data?.challenge_card?.[0]?.description || "Solar developers build expensive grids, but rural communities lack the machinery to consume enough power, making grids unprofitable."}
                </p>
              </div>
           </motion.div>
@@ -108,10 +113,10 @@ const ProblemSolution: React.FC = () => {
                </div>
              </div>
              <div className="relative z-10">
-                <div className="text-white/70 text-sm font-light uppercase tracking-wider mb-2">End-User Pain</div>
-               <h3 className="text-2xl text-white font-medium mb-3">The CapEx Barrier</h3>
+                <div className="text-white/70 text-sm font-light uppercase tracking-wider mb-2">{data?.challenge_card?.[1]?.title || "End-User Pain"}</div>
+               <h3 className="text-2xl text-white font-medium mb-3">{data?.challenge_card?.[1]?.subtitle || "The CapEx Barrier"}</h3>
                <p className="text-white/80 leading-relaxed font-light text-sm max-w-[95%]">
-                 Rural enterprises are solvent but illiquid. They cannot afford the $2,000+ upfront cost for equipment, trapping them in subsistence.
+                 {data?.challenge_card?.[1]?.description || "Rural enterprises are solvent but illiquid. They cannot afford the $2,000+ upfront cost for equipment, trapping them in subsistence."}
                </p>
              </div>
           </motion.div>

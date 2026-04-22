@@ -5,6 +5,11 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Wifi, Users, Briefcase, Settings, ArrowUpRight, Zap, Database, ShieldCheck } from 'lucide-react';
 import SectionHeader from './SectionHeader';
+import type { OurEcosystemSection } from '@/lib/strapi/types';
+
+interface HubAndSolutionsProps {
+  data?: OurEcosystemSection | null;
+}
 
 // --- DATA CONFIGURATION ---
 
@@ -16,7 +21,7 @@ const SOLUTIONS = [
     title: "Lease-to-Own Financing",
     subtitle: "Capital Access",
     description: "Farmers receive high-yield machinery for zero money down, paying small amounts aligned with harvest cycles. We de-risk the investment through asset collateralization.",
-    relatedSpokeId: 'capital',
+    relatedSpokeId: 1,
     icon: Briefcase
   },
   {
@@ -24,7 +29,7 @@ const SOLUTIONS = [
     title: "Energy-Linked Deployment",
     subtitle: "Grid Stability",
     description: "We deploy high-load assets (mills, cold chains) to electrified areas, creating predictable 'Anchor Tenant' demand that makes mini-grids financially viable.",
-    relatedSpokeId: 'end-users',
+    relatedSpokeId: 2,
     icon: Zap
   },
   {
@@ -32,7 +37,7 @@ const SOLUTIONS = [
     title: "Tech-Enabled Operations",
     subtitle: "Asset Security",
     description: "IoT infrastructure provides real-time tracking, remote lockout capabilities, and predictive maintenance alerts to protect asset value and ensure repayments.",
-    relatedSpokeId: 'iot',
+    relatedSpokeId: 3,
     icon: Database
   },
   {
@@ -40,41 +45,53 @@ const SOLUTIONS = [
     title: "Full Lifecycle Management",
     subtitle: "O&M Support",
     description: "Rapid response maintenance teams ensure assets never go dark. We handle the repairs, spare parts, and servicing so the farmer can focus on production.",
-    relatedSpokeId: 'maintenance',
+    relatedSpokeId: 4,
     icon: ShieldCheck
   }
 ];
 
 const SPOKES = [
   { 
-    id: 'iot',
+    id: 1,
     icon: Wifi, 
     label: "IoT Tracking", 
     x: 50, y: 10 // Top
   },
   { 
-    id: 'maintenance',
+    id: 2,
     icon: Settings, 
     label: "Maintenance", 
     x: 90, y: 50 // Right
   },
   { 
-    id: 'end-users',
+    id: 3,
     icon: Users, 
     label: "End Users", 
     x: 50, y: 90 // Bottom
   },
   { 
-    id: 'capital',
+    id: 4,
     icon: Briefcase, 
     label: "Capital", 
     x: 10, y: 50 // Left
   }
 ];
 
-const HubAndSolutions: React.FC = () => {
+const HubAndSolutions: React.FC<HubAndSolutionsProps> = ({ data }) => {
   const [activeSolution, setActiveSolution] = useState(0);
   const activeSpokeId = SOLUTIONS[activeSolution].relatedSpokeId;
+
+  // Merge CMS data with local static layout details
+  const displaySolutions = SOLUTIONS.map((sol, index) => {
+    const cardData = data?.card?.[index];
+    return {
+      ...sol,
+      relatedSpokeId: cardData?.card_id,
+      title: cardData?.title,
+      description: cardData?.description,
+      subtitle: cardData?.subtitle,
+    };
+  });
 
   return (
     <section className="relative min-h-screen bg-ag-green-950 pt-32 lg:pt-40 pb-24 overflow-hidden snap-start flex flex-col">
@@ -101,8 +118,8 @@ const HubAndSolutions: React.FC = () => {
         <div className="mb-12 border-b border-white/20 pb-8 drop-shadow-md">
             <SectionHeader 
                 number="03" 
-                category="Our Ecosystem" 
-                title={<>Integrated Solutions <br /> & <span className="text-ag-lime">Infrastructure.</span></>} 
+                category={data?.sectionLabel || "Our Ecosystem"} 
+                title={data?.title || <>Integrated Solutions <br /> & <span className="text-ag-lime">Infrastructure.</span></>} 
                 dark={true}
             />
         </div>
@@ -115,7 +132,7 @@ const HubAndSolutions: React.FC = () => {
                 
                 {/* SVG Connections with Flowing Stroke */}
                 <svg className="absolute inset-0 w-full h-full pointer-events-none z-0">
-                    {SPOKES.map((spoke, i) => {
+                    {SPOKES.map((spoke, i: number) => {
                         const isActive = activeSpokeId === spoke.id;
                         return (
                             <motion.line
@@ -195,7 +212,7 @@ const HubAndSolutions: React.FC = () => {
 
             {/* RIGHT COLUMN: SOLUTIONS LIST (The Interface) */}
             <div className="flex flex-col gap-5 order-1 lg:order-2">
-                {SOLUTIONS.map((solution, index) => {
+                {displaySolutions.map((solution, index) => {
                     const isActive = activeSolution === index;
                     return (
                         <motion.div

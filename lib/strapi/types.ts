@@ -118,7 +118,80 @@ export interface IntroductionSection {
   bullets?: IntroductionBullet[];
 }
 
-export type Section = HeroSection | TrustBarSection | IntroductionSection;
+export interface Project {
+  id: number;
+  title: string;
+  country: string;
+  year: string;
+  challenge: string;
+  solution: string;
+  core_impact: string[];
+  sdg_impact: number[];
+  cta_url: string | null;
+  categories: string[];
+  images: StrapiMedia[];
+}
+
+export interface OurProjectsSection {
+  __component: 'sections.our-projects';
+  id: number;
+  sectionLabel: string;
+  title: string;
+  project: Project[];
+}
+
+export interface ChallengeCard {
+  id: number;
+  title: string;
+  subtitle: string | null;
+  description: string | null;
+  svg_icon: string | null;
+}
+
+export interface TheChallengeSection {
+  __component: 'sections.the-challenge';
+  id: number;
+  sectionLabel: string | null;
+  title: string | null;
+  challenge_card: ChallengeCard[];
+}
+
+export interface EcosystemCard {
+  id: number;
+  card_id: string;
+  title: string;
+  subtitle: string | null;
+  description: string | null;
+  svg_icon: string | null;
+  cta: string | null;
+  cta_url: string | null;
+}
+
+export interface OurEcosystemSection {
+  __component: 'sections.our-ecosystem';
+  id: number;
+  sectionLabel: string | null;
+  title: string | null;
+  card: EcosystemCard[];
+}
+
+export interface PartnershipCard {
+  id: number;
+  title: string | null;
+  description: string | null;
+  cta: string | null;
+  cta_url: string | null;
+}
+
+export interface PartnershipSection {
+  __component: 'sections.partnership';
+  id: number;
+  title: string | null;
+  description: string | null;
+  partnership_card: PartnershipCard | null;
+}
+
+export type Section = HeroSection | TrustBarSection | IntroductionSection | OurProjectsSection | TheChallengeSection | OurEcosystemSection | PartnershipSection;
 
 // --- Page response types ---
 

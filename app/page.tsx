@@ -1,16 +1,33 @@
-import { getHomePage, getHeroSection, getTrustBarSection, getAllIntroductionSections } from '@/lib/strapi';
+import { 
+  getHomePage, 
+  getHeroSection, 
+  getTrustBarSection, 
+  getIntroductionSection,
+  getTheChallengeSection,
+  getOurEcosystemSection,
+  getOurProjectsSection,
+  getPartnershipSection
+} from '@/lib/strapi';
 import HomePageClient from '@/components/HomePageClient';
 
 export default async function HomePage() {
   let heroData = null;
   let trustBarData = null;
-  let introSections: Awaited<ReturnType<typeof getAllIntroductionSections>> = [];
+  let introData = null;
+  let challengeData = null;
+  let ecosystemData = null;
+  let projectsData = null;
+  let partnershipData = null;
 
   try {
     const pageData = await getHomePage();
     heroData = getHeroSection(pageData.sections) ?? null;
     trustBarData = getTrustBarSection(pageData.sections) ?? null;
-    introSections = getAllIntroductionSections(pageData.sections);
+    introData = getIntroductionSection(pageData.sections) ?? null;
+    challengeData = getTheChallengeSection(pageData.sections) ?? null;
+    ecosystemData = getOurEcosystemSection(pageData.sections) ?? null;
+    projectsData = getOurProjectsSection(pageData.sections) ?? null;
+    partnershipData = getPartnershipSection(pageData.sections) ?? null;
   } catch (err) {
     console.error('[HomePage] Failed to fetch Strapi data:', err);
   }
@@ -19,7 +36,11 @@ export default async function HomePage() {
     <HomePageClient
       heroData={heroData}
       trustBarData={trustBarData}
-      introSections={introSections}
+      introData={introData}
+      challengeData={challengeData}
+      ecosystemData={ecosystemData}
+      projectsData={projectsData}
+      partnershipData={partnershipData}
     />
   );
 }
