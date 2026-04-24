@@ -38,11 +38,11 @@ const Navigation: React.FC<NavigationProps> = ({ onNavigate, currentPage = 'home
   };
 
   const navLinks = [
-    { id: 'home', label: 'Home' },
+    { id: 'home', label: 'Home', link: '/' },
     { id: 'company', label: 'Company', hasMega: true },
-    { id: 'solutions', label: 'Solutions' },
-    { id: 'portfolio', label: 'Portfolio' },
-    { id: 'news', label: 'News' }
+    { id: 'solutions', label: 'Solutions', link: '/solutions' },
+    { id: 'portfolio', label: 'Portfolio', link: '/portfolio' },
+    { id: 'news', label: 'News', link: '/news' }
   ];
 
   const companySubLinks = [
@@ -112,8 +112,7 @@ const Navigation: React.FC<NavigationProps> = ({ onNavigate, currentPage = 'home
                       onMouseEnter={() => link.hasMega && setIsCompanyHovered(true)}
                     >
                       <a 
-                        href="#"
-                        onClick={(e) => link.hasMega ? handleLinkClick(e, 'about') : handleLinkClick(e, link.id as any)}
+                        href={link.link}
                         className={`text-sm font-semibold relative group transition-all duration-300 flex items-center gap-1 ${
                           (currentPage === link.id || (link.hasMega && (currentPage === 'about' || currentPage === 'team')))
                             ? 'text-ag-lime' 

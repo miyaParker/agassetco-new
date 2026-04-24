@@ -23,84 +23,46 @@ import {
 } from 'lucide-react';
 import SectionHeader from './SectionHeader';
 import InteractiveMapSection from './InteractiveMapSection';
+import ProblemSolution from './ProblemSolution';
+import {
+  PortfolioPageData,
+  Project,
+  getPortfolioHeroSection,
+  getReachSection,
+  getCaseStudiesSection,
+  getValidationSection,
+  getTheChallengeSection,
+  strapiMediaUrl,
+} from '@/lib/strapi';
 
 interface PortfolioPageProps {
   onNavigate?: (page: any, id?: any) => void;
+  data?: PortfolioPageData | null;
 }
 
-// --- DATA ---
-
-const PROJECTS = [
-  {
-    id: "01",
-    title: "Jigawa Agro-Processing Hub",
-    category: "Agro-Processing",
-    location: "Nigeria",
-    year: "2024",
-    problem: "Post-harvest loss exceeding 40% due to lack of local power, leading to reduced farmer income and food insecurity for rural clusters.",
-    solution: "200kW Solar-powered industrial rice hullers and millers that process harvest at source, removing transportation waste and anchor load stability for mini-grids.",
-    impact: ["SME Revenue +30%", "Grid Revenue +40%", "Local Job Creation +12%"],
-    status: "Active",
-    type: "Lease-to-Own",
-    sdgs: [7, 8, 9],
-    images: [
-      "https://images.unsplash.com/photo-1706770290344-b4a1ba7fc6b3?q=80&w=1335&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      "https://images.unsplash.com/photo-1763800758293-40b0658f2141?q=80&w=1335&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      "https://images.unsplash.com/photo-1686820740687-426a7b9b2043?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-    ]
-  },
-  {
-    id: "02",
-    title: "Kaduna Cold Chain Facility",
-    category: "Cold Chain",
-    location: "Kaduna",
-    year: "2023",
-    problem: "Perishable produce spoiling within 48 hours of harvest due to high ambient temperatures and zero localized refrigeration capacity.",
-    solution: "Localized temperature-controlled modular storage units powered 100% by off-grid solar and battery storage systems, reducing dependency on external energy.",
-    impact: ["Spoilage Reduced to <5%", "21-Day Shelf Life Extension", "Market Price Stability +20%"],
-    status: "Active",
-    type: "PUE-as-a-Service",
-    sdgs: [1, 2, 7],
-    images: [
-      "https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=2874&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1586771107445-d3ca888129ff?q=80&w=2944&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1605000797499-95a51c5269ae?q=80&w=2942&auto=format&fit=crop"
-    ]
-  },
-  {
-    id: "03",
-    title: "Benue Irrigation Scheme",
-    category: "Irrigation",
-    location: "Benue",
-    year: "2025",
-    problem: "Rain-fed agriculture limiting farmers to one cycle per year, causing massive seasonal income fluctuations and dependency on weather patterns.",
-    solution: "Solar-powered borehole systems with smart-metered pumps providing automated water distribution during dry seasons, enabling year-round production.",
-    impact: ["2x Annual Harvest Cycles", "100% Diesel Displacement", "Household Income +65%"],
-    status: "Active",
-    type: "Lease-to-Own",
-    sdgs: [7, 9, 13],
-    images: [
-      "https://images.unsplash.com/photo-1492496913980-501348b61469?q=80&w=2787&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2940&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?q=80&w=2940&auto=format&fit=crop"
-    ]
-  }
-];
-
-const CATEGORIES = ["All", "Agro-Processing", "Cold Chain", "Irrigation"];
 
 const SDG_COLORS: Record<number, string> = {
   1: "#E5243B", 2: "#DDA63A", 7: "#FDB713", 8: "#A21942", 9: "#FD6925", 12: "#BF8B2E", 13: "#3F7E44"
 };
 
-const PortfolioPage: React.FC<PortfolioPageProps> = ({ onNavigate }) => {
-  const [activeTab, setActiveTab] = useState("All");
-  const [viewMode, setViewMode] = useState<'grid' | 'accordion'>('accordion');
-  const [activeProjectId, setActiveProjectId] = useState<string | null>("01");
+const PortfolioPage: React.FC<PortfolioPageProps> = ({ onNavigate, data }) => {
+  const sections = data?.PortfolioSections || [];
+  const heroData = getPortfolioHeroSection(sections);
+  const reachData = getReachSection(sections);
+  const caseStudiesData = getCaseStudiesSection(sections);
+  const validationData = getValidationSection(sections);
+  const challengeData = getTheChallengeSection(sections);
 
-  const filteredProjects = activeTab === "All" 
-    ? PROJECTS 
-    : PROJECTS.filter(p => p.category === activeTab);
+  const projects: Project[] = caseStudiesData?.projects || [];
+  const allCategories = ['All', ...Array.from(new Set(projects.flatMap(p => p.categories || [])))];
+
+  const [activeTab, setActiveTab] = useState('All');
+  const [viewMode, setViewMode] = useState<'grid' | 'accordion'>('accordion');
+  const [activeProjectId, setActiveProjectId] = useState<number | null>(projects[0]?.id ?? null);
+
+  const filteredProjects = activeTab === 'All'
+    ? projects
+    : projects.filter(p => (p.categories || []).includes(activeTab));
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -139,14 +101,14 @@ const PortfolioPage: React.FC<PortfolioPageProps> = ({ onNavigate }) => {
             </div>
             
             <div className="text-[10px] font-bold uppercase tracking-[0.3em] text-ag-green-950">
-              01 Track Record & Projects — 2025
+              {heroData?.title || "01 Track Record & Projects — 2025"}
             </div>
           </motion.div>
 
           <motion.div variants={fadeInUp as any} className="relative w-full aspect-[21/9] md:aspect-[3/1] mb-16 group">
             <div className="absolute inset-0 rounded-[0.7rem] overflow-hidden bg-gray-100">
               <img
-                src="https://images.unsplash.com/photo-1464226184884-fa280b87c399?q=80&w=2940&auto=format&fit=crop"
+                src={heroData?.hero_img ? `${process.env.NEXT_PUBLIC_STRAPI_URL || 'https://agassetco.nolimitcrm.com.ng'}${heroData.hero_img.url}` : "https://images.unsplash.com/photo-1464226184884-fa280b87c399?q=80&w=2940&auto=format&fit=crop"}
                 alt="Working Lands"
                 className="w-full h-full object-cover grayscale transition-all duration-1000 group-hover:grayscale-0 group-hover:scale-105"
                 loading="eager"
@@ -168,12 +130,12 @@ const PortfolioPage: React.FC<PortfolioPageProps> = ({ onNavigate }) => {
 
             <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 w-full max-w-5xl px-6">
                <div className="bg-white shadow-2xl rounded-[0.7rem] p-6 md:p-8 flex flex-wrap justify-between items-center gap-6 border border-gray-100">
-                  {[
+                  {(heroData?.stats ? Object.entries(heroData.stats).filter(([k, v]) => k !== 'id' && v).map(([k, v]) => ({ label: k, val: v })) : [
                     { label: "Assets Deployed", val: "500+" },
                     { label: "Financed", val: "₦850M+" },
                     { label: "States Covered", val: "12" },
                     { label: "Tons Processed", val: "5k+" }
-                  ].map((stat, i) => (
+                  ]).slice(0, 4).map((stat, i) => (
                     <div key={i} className="flex flex-col">
                        <span className="text-2xl md:text-3xl font-bold text-ag-green-950">{stat.val}</span>
                        <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">{stat.label}</span>
@@ -189,7 +151,7 @@ const PortfolioPage: React.FC<PortfolioPageProps> = ({ onNavigate }) => {
                 variants={fadeInUp as any}
                 className="text-sm md:text-lg text-gray-500 font-light leading-relaxed max-w-md mb-8"
               >
-                Exploring our footprint of productive use deployments across Nigeria’s underserved rural markets. We turn energy into bankable economic growth through real, durable assets.
+                {heroData?.description || "Exploring our footprint of productive use deployments across Nigeria’s underserved rural markets. We turn energy into bankable economic growth through real, durable assets."}
               </motion.p>
             </div>
             <div className="lg:col-span-7 lg:text-right">
@@ -197,8 +159,14 @@ const PortfolioPage: React.FC<PortfolioPageProps> = ({ onNavigate }) => {
                 variants={fadeInUp as any}
                 className="text-5xl md:text-7xl lg:text-[5.5rem] font-bold text-ag-green-950 leading-[0.95] tracking-tighter"
               >
-                REAL ASSETS. <br/>
-                <span className="text-ag-lime">REAL IMPACT.</span>
+                {heroData?.subtitle ? (
+                <>
+                  {heroData.subtitle.split('. ')[0]}. <br/>
+                  <span className="text-ag-lime">{heroData.subtitle.split('. ').slice(1).join('. ')}</span>
+                </>
+              ) : (
+                <>REAL ASSETS. <br/><span className="text-ag-lime">REAL IMPACT.</span></>
+              )}
               </motion.h1>
             </div>
           </div>
@@ -208,7 +176,7 @@ const PortfolioPage: React.FC<PortfolioPageProps> = ({ onNavigate }) => {
       {/* 01. GEOGRAPHIC FOOTPRINT */}
       <section className="py-24 bg-gray-50 border-t border-gray-100 overflow-hidden">
         <div className="max-w-7xl mx-auto px-6 mb-12">
-          <SectionHeader number="01" category="Reach" title="Geographic Footprint." />
+          <SectionHeader number="01" category={reachData?.position || "Reach"} title={reachData?.title || "Geographic Footprint."} />
         </div>
         <InteractiveMapSection onNavigate={onNavigate} />
       </section>
@@ -217,7 +185,7 @@ const PortfolioPage: React.FC<PortfolioPageProps> = ({ onNavigate }) => {
       <section className="py-24 bg-white border-t border-gray-100">
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
-            <SectionHeader number="02" category="Case Studies" title="Proof of Concept." />
+            <SectionHeader number="02" category="Case Studies" title={caseStudiesData?.title || "Proof of Concept."} />
             
             <div className="flex items-center gap-2 bg-gray-50 p-1.5 rounded-full border border-gray-100 self-start md:self-auto md:mb-24">
               <button 
@@ -238,7 +206,7 @@ const PortfolioPage: React.FC<PortfolioPageProps> = ({ onNavigate }) => {
           </div>
           
           <div className="flex flex-wrap gap-4 mb-16 border-b border-gray-100 pb-8">
-             {CATEGORIES.map((cat) => (
+             {allCategories.map((cat) => (
                <button 
                  key={cat}
                  onClick={() => setActiveTab(cat)}
@@ -272,21 +240,30 @@ const PortfolioPage: React.FC<PortfolioPageProps> = ({ onNavigate }) => {
                     onClick={() => onNavigate?.('project-detail', project.id)}
                     className="group bg-white rounded-[0.7rem] overflow-hidden border border-gray-100 shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 cursor-pointer"
                   >
-                    <div className="aspect-[4/3] overflow-hidden relative">
-                       <img src={project.images[0]} alt={project.title} className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" loading="eager" fetchPriority="high" />
-                       <div className="absolute top-4 left-4 flex gap-2">
-                          <span className="bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-[9px] font-bold uppercase tracking-widest text-ag-green-950">{project.type}</span>
-                          <span className="bg-ag-lime px-3 py-1 rounded-full text-[9px] font-bold uppercase tracking-widest text-white shadow-sm">{project.status}</span>
-                       </div>
+                    <div className="aspect-[4/3] overflow-hidden relative bg-ag-green-950/5">
+                       <img
+                         src={project.images?.[0] ? strapiMediaUrl(project.images[0].url) : 'https://images.unsplash.com/photo-1464226184884-fa280b87c399?q=80&w=2940&auto=format&fit=crop'}
+                         alt={project.title}
+                         className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                         loading="eager"
+                         fetchPriority="high"
+                       />
+                       {project.categories?.length > 0 && (
+                         <div className="absolute top-4 left-4 flex gap-2 flex-wrap">
+                           {project.categories.map(cat => (
+                             <span key={cat} className="bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-[9px] font-bold uppercase tracking-widest text-ag-green-950">{cat}</span>
+                           ))}
+                         </div>
+                       )}
                     </div>
                     <div className="p-8">
-                       <span className="text-[10px] font-bold text-ag-lime uppercase tracking-widest block mb-2">{project.category}</span>
+                       <span className="text-[10px] font-bold text-ag-lime uppercase tracking-widest block mb-2">{project.categories?.[0] || ''}</span>
                        <h3 className="text-2xl font-bold text-ag-green-950 mb-6 leading-tight">{project.title}</h3>
-                       
+
                        <div className="space-y-4 mb-8">
                           <div>
                              <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">The Problem</p>
-                             <p className="text-sm text-gray-500 leading-relaxed line-clamp-2">{project.problem}</p>
+                             <p className="text-sm text-gray-500 leading-relaxed line-clamp-2">{project.challenge}</p>
                           </div>
                           <div>
                              <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">The Solution</p>
@@ -299,7 +276,7 @@ const PortfolioPage: React.FC<PortfolioPageProps> = ({ onNavigate }) => {
                              <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Core Impact</p>
                              <div className="flex items-center gap-2 text-sm font-bold text-ag-green-950">
                                 <CheckCircle2 className="w-4 h-4 text-ag-lime" />
-                                {project.impact[0]}
+                                {project.core_impact?.[0] || ''}
                              </div>
                           </div>
                           <ArrowUpRight className="w-5 h-5 text-ag-lime group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
@@ -338,7 +315,7 @@ const PortfolioPage: React.FC<PortfolioPageProps> = ({ onNavigate }) => {
           variants={containerVariants}
           className="max-w-7xl mx-auto px-6"
         >
-          <SectionHeader number="03" category="Validation" title="Validated by Industry Leaders." />
+          <SectionHeader number="03" category="Validation" title={validationData?.title || "Validated by Industry Leaders."} />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
              <motion.div variants={fadeInUp as any} className="bg-white p-12 md:p-16 rounded-[3rem] shadow-xl border border-gray-100 relative group">
                 <div className="absolute top-12 right-12 opacity-5 group-hover:opacity-10 transition-opacity">
@@ -484,6 +461,9 @@ const PortfolioPage: React.FC<PortfolioPageProps> = ({ onNavigate }) => {
         </motion.div>
       </section>
 
+      {/* 05. THE CHALLENGE */}
+      <ProblemSolution data={challengeData} />
+
       <section className="relative bg-ag-green-950 py-32 overflow-hidden border-t border-white/5">
         <motion.div 
           initial="hidden"
@@ -551,7 +531,7 @@ const PortfolioPage: React.FC<PortfolioPageProps> = ({ onNavigate }) => {
 // --- SUB-COMPONENTS ---
 
 interface ProjectAccordionRowProps {
-  project: typeof PROJECTS[0];
+  project: Project;
   isOpen: boolean;
   onClick: () => void;
   onDetailClick?: () => void;
@@ -575,18 +555,17 @@ const ProjectAccordionRow: React.FC<ProjectAccordionRowProps> = ({ project, isOp
 
         <div className="flex flex-wrap md:flex-nowrap items-center gap-4 md:gap-8">
           <div className="flex items-center gap-6 text-sm text-gray-500 font-medium tracking-wide">
-            <span>{project.location}</span>
+            <span>{project.country}</span>
             <span className="w-1 h-1 bg-gray-300 rounded-full"></span>
             <span>{project.year}</span>
           </div>
-          
-          <div className="flex gap-2">
-            <span className="px-3 py-1 bg-ag-green-950 text-white text-[9px] font-bold uppercase tracking-widest rounded-full">
-              {project.category}
-            </span>
-            <span className="px-3 py-1 border border-ag-green-950/10 text-ag-green-950 text-[9px] font-bold uppercase tracking-widest rounded-full">
-              {project.type}
-            </span>
+
+          <div className="flex flex-wrap gap-2">
+            {(project.categories || []).map(cat => (
+              <span key={cat} className="px-3 py-1 bg-ag-green-950 text-white text-[9px] font-bold uppercase tracking-widest rounded-full">
+                {cat}
+              </span>
+            ))}
           </div>
           
           <div className="transition-transform duration-500">
@@ -605,42 +584,48 @@ const ProjectAccordionRow: React.FC<ProjectAccordionRowProps> = ({ project, isOp
             className="overflow-hidden"
           >
             <div className="pb-16 pt-4 px-4">
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-                
-                <div className="lg:col-span-7 flex flex-col gap-4">
-                  <div className="grid grid-cols-2 gap-4 h-[220px]">
-                    <motion.div 
-                      initial={{ scale: 0.95, opacity: 0 }}
-                      animate={{ scale: 1, opacity: 1 }}
-                      transition={{ delay: 0.1 }}
-                      className="relative rounded-[0.7rem] overflow-hidden shadow-lg h-full"
-                    >
-                      <img src={project.images[0]} alt="Detail 1" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" loading="eager" fetchPriority="high" />
-                    </motion.div>
-                    <motion.div 
-                      initial={{ scale: 0.95, opacity: 0 }}
-                      animate={{ scale: 1, opacity: 1 }}
-                      transition={{ delay: 0.2 }}
-                      className="relative rounded-[0.7rem] overflow-hidden shadow-lg h-full"
-                    >
-                      <img src={project.images[1]} alt="Detail 2" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" loading="eager" fetchPriority="high" />
-                    </motion.div>
-                  </div>
-                  <motion.div 
-                    initial={{ scale: 0.95, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ delay: 0.3 }}
-                    className="relative rounded-[0.7rem] overflow-hidden shadow-xl h-[260px]"
-                  >
-                    <img src={project.images[2]} alt="Detail 3 Landscape" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" loading="eager" fetchPriority="high" />
-                  </motion.div>
-                </div>
+              <div className={`grid grid-cols-1 gap-12 ${project.images?.length ? 'lg:grid-cols-12' : ''}`}>
 
-                <div className="lg:col-span-5 flex flex-col justify-between py-2">
+                {project.images?.length > 0 && (
+                  <div className="lg:col-span-7 flex flex-col gap-4">
+                    <div className="grid grid-cols-2 gap-4 h-[220px]">
+                      <motion.div
+                        initial={{ scale: 0.95, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        transition={{ delay: 0.1 }}
+                        className="relative rounded-[0.7rem] overflow-hidden shadow-lg h-full"
+                      >
+                        <img src={strapiMediaUrl(project.images[0].url)} alt="Detail 1" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" loading="eager" fetchPriority="high" />
+                      </motion.div>
+                      {project.images[1] && (
+                        <motion.div
+                          initial={{ scale: 0.95, opacity: 0 }}
+                          animate={{ scale: 1, opacity: 1 }}
+                          transition={{ delay: 0.2 }}
+                          className="relative rounded-[0.7rem] overflow-hidden shadow-lg h-full"
+                        >
+                          <img src={strapiMediaUrl(project.images[1].url)} alt="Detail 2" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" loading="eager" fetchPriority="high" />
+                        </motion.div>
+                      )}
+                    </div>
+                    {project.images[2] && (
+                      <motion.div
+                        initial={{ scale: 0.95, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        transition={{ delay: 0.3 }}
+                        className="relative rounded-[0.7rem] overflow-hidden shadow-xl h-[260px]"
+                      >
+                        <img src={strapiMediaUrl(project.images[2].url)} alt="Detail 3 Landscape" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" loading="eager" fetchPriority="high" />
+                      </motion.div>
+                    )}
+                  </div>
+                )}
+
+                <div className={`${project.images?.length ? 'lg:col-span-5' : ''} flex flex-col justify-between py-2`}>
                    <div className="space-y-10">
                       <div>
                         <h4 className="text-[10px] font-bold text-ag-lime uppercase tracking-[0.2em] mb-2">Challenge</h4>
-                        <p className="text-sm text-gray-500 font-light leading-relaxed">{project.problem}</p>
+                        <p className="text-sm text-gray-500 font-light leading-relaxed">{project.challenge}</p>
                       </div>
                       <div>
                         <h4 className="text-[10px] font-bold text-ag-lime uppercase tracking-[0.2em] mb-2">Strategic Intervention</h4>
@@ -649,7 +634,7 @@ const ProjectAccordionRow: React.FC<ProjectAccordionRowProps> = ({ project, isOp
                       <div>
                         <h4 className="text-[10px] font-bold text-ag-lime uppercase tracking-[0.2em] mb-2">Key Impact</h4>
                         <ul className="space-y-2">
-                           {project.impact.map((metric, i) => (
+                           {(project.core_impact || []).map((metric: string, i: number) => (
                              <li key={i} className="flex items-center gap-3">
                                <CheckCircle2 className="w-3.5 h-3.5 text-ag-lime" />
                                <span className="text-sm text-ag-green-950 font-medium">{metric}</span>
@@ -662,9 +647,9 @@ const ProjectAccordionRow: React.FC<ProjectAccordionRowProps> = ({ project, isOp
                   <div className="flex items-center justify-between mt-12 pt-8 border-t border-gray-100">
                     <div className="flex items-center gap-3">
                        <span className="text-[9px] font-bold text-gray-400 uppercase tracking-widest mr-2">Core SDGs:</span>
-                       {project.sdgs.map((sdg) => (
-                         <div 
-                           key={sdg} 
+                       {(project.sdg_impact || []).map((sdg: number) => (
+                         <div
+                           key={sdg}
                            className="w-8 h-8 rounded flex items-center justify-center text-white text-[10px] font-bold shadow-sm transition-transform hover:scale-110 cursor-help"
                            style={{ backgroundColor: SDG_COLORS[sdg] || '#ccc' }}
                            title={`SDG Goal ${sdg}`}
@@ -674,7 +659,7 @@ const ProjectAccordionRow: React.FC<ProjectAccordionRowProps> = ({ project, isOp
                        ))}
                     </div>
 
-                    <button 
+                    <button
                       onClick={(e) => { e.stopPropagation(); onDetailClick?.(); }}
                       className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.25em] text-ag-green-950 hover:text-ag-lime transition-all group/btn"
                     >

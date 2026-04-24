@@ -15,40 +15,6 @@ interface HubAndSolutionsProps {
 
 const STATIC_BG = "https://images.unsplash.com/photo-1495107334309-fcf20504a5ab?q=80&w=2940&auto=format&fit=crop";
 
-const SOLUTIONS = [
-  {
-    id: 0,
-    title: "Lease-to-Own Financing",
-    subtitle: "Capital Access",
-    description: "Farmers receive high-yield machinery for zero money down, paying small amounts aligned with harvest cycles. We de-risk the investment through asset collateralization.",
-    relatedSpokeId: 1,
-    icon: Briefcase
-  },
-  {
-    id: 1,
-    title: "Energy-Linked Deployment",
-    subtitle: "Grid Stability",
-    description: "We deploy high-load assets (mills, cold chains) to electrified areas, creating predictable 'Anchor Tenant' demand that makes mini-grids financially viable.",
-    relatedSpokeId: 2,
-    icon: Zap
-  },
-  {
-    id: 2,
-    title: "Tech-Enabled Operations",
-    subtitle: "Asset Security",
-    description: "IoT infrastructure provides real-time tracking, remote lockout capabilities, and predictive maintenance alerts to protect asset value and ensure repayments.",
-    relatedSpokeId: 3,
-    icon: Database
-  },
-  {
-    id: 3,
-    title: "Full Lifecycle Management",
-    subtitle: "O&M Support",
-    description: "Rapid response maintenance teams ensure assets never go dark. We handle the repairs, spare parts, and servicing so the farmer can focus on production.",
-    relatedSpokeId: 4,
-    icon: ShieldCheck
-  }
-];
 
 const SPOKES = [
   { 
@@ -78,20 +44,19 @@ const SPOKES = [
 ];
 
 const HubAndSolutions: React.FC<HubAndSolutionsProps> = ({ data }) => {
+    const displaySolutions = data?.card?.map((item) => {
+        return {
+            id: item?.card_id,
+            title: item?.title,
+            subtitle: item?.subtitle,
+            description: item?.description,
+            relatedSpokeId: item?.card_id ? parseInt(item.card_id, 10) : undefined,
+            icon: item?.svg_icon,
+        };
+    }) || [];
   const [activeSolution, setActiveSolution] = useState(0);
-  const activeSpokeId = SOLUTIONS[activeSolution].relatedSpokeId;
+  const activeSpokeId = displaySolutions[activeSolution].relatedSpokeId;
 
-  // Merge CMS data with local static layout details
-  const displaySolutions = SOLUTIONS.map((sol, index) => {
-    const cardData = data?.card?.[index];
-    return {
-      ...sol,
-      relatedSpokeId: cardData?.card_id,
-      title: cardData?.title,
-      description: cardData?.description,
-      subtitle: cardData?.subtitle,
-    };
-  });
 
   return (
     <section className="relative min-h-screen bg-ag-green-950 pt-32 lg:pt-40 pb-24 overflow-hidden snap-start flex flex-col">
@@ -239,7 +204,9 @@ const HubAndSolutions: React.FC<HubAndSolutionsProps> = ({ data }) => {
                                             : 'bg-white/10 text-white/50'
                                         }
                                     `}>
-                                        <solution.icon className="w-5 h-5" />
+                                        {solution.icon ? (
+                                            <div className="w-5 h-5 [&>svg]:w-full [&>svg]:h-full" dangerouslySetInnerHTML={{ __html: solution.icon }} />
+                                        ) : null}
                                     </div>
                                     
                                     <div className="grow flex flex-col justify-center">

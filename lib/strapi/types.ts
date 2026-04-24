@@ -191,7 +191,57 @@ export interface PartnershipSection {
   partnership_card: PartnershipCard | null;
 }
 
-export type Section = HeroSection | TrustBarSection | IntroductionSection | OurProjectsSection | TheChallengeSection | OurEcosystemSection | PartnershipSection;
+export interface PortfolioHeroSection {
+  __component: 'sections.portfolio-hero';
+  id: number;
+  title: string | null;
+  subtitle: string | null;
+  description: string | null;
+  stats: Record<string, string> | null;
+  hero_img: StrapiMedia | null;
+}
+
+export interface ReachSection {
+  __component: 'sections.reach';
+  id: number;
+  title: string | null;
+  position: string | null;
+  locations: {
+    id: number;
+    name: string | null;
+    x: number | null;
+    y: number | null;
+  }[] | null;
+  project: Project[] | null;
+}
+
+export interface CaseStudiesSection {
+  __component: 'sections.case-studies';
+  id: number;
+  title: string | null;
+  categories: {
+    id: number;
+    name: string | null;
+  }[] | null;
+  projects: Project[] | null;
+}
+
+export interface ValidationCard {
+  id: number;
+  quote: string | null;
+  author_name: string | null;
+  author_title: string | null;
+  company_name: string | null;
+}
+
+export interface ValidationSection {
+  __component: 'sections.validation';
+  id: number;
+  title: string | null;
+  validation_cards: ValidationCard[] | null;
+}
+
+export type Section = HeroSection | TrustBarSection | IntroductionSection | OurProjectsSection | TheChallengeSection | OurEcosystemSection | PartnershipSection | PortfolioHeroSection | ReachSection | CaseStudiesSection | ValidationSection;
 
 // --- Page response types ---
 
