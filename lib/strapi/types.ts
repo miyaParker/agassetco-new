@@ -218,6 +218,7 @@ export interface ReachSection {
   id: number;
   title: string | null;
   sectionLabel: string | null;
+  position: string | null;
   projects_showcase: ReachProjectShowcase[] | null;
 }
 

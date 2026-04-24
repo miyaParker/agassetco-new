@@ -61,6 +61,6 @@ export function getValidationSection(sections: Section[]): ValidationSection | u
   return findSection<ValidationSection>(sections, 'sections.validation');
 }
 
-export function getTheChallengeSection(sections: Section[]): TheChallengeSection | undefined {
-  return findSection<TheChallengeSection>(sections, 'sections.the-challenge');
-}
+// export function getTheChallengeSection(sections: Section[]): TheChallengeSection | undefined {
+//   return findSection<TheChallengeSection>(sections, 'sections.the-challenge');
+// }
