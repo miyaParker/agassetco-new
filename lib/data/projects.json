@@ -1,0 +1,331 @@
+{
+  "projects": {
+    "01": {
+      "id": "NG-JIG-001",
+      "title": "Jigawa Rice Milling Hub.",
+      "location": "Phase 1 • Gwaram LGA, Jigawa State",
+      "heroImage": "https://images.unsplash.com/photo-1595838788863-29a377d0a7d5?q=80&w=2874&auto=format&fit=crop",
+      "structure": "Lease-to-Own",
+      "partner": "Grid Dev Co",
+      "date": "Q3 2024",
+      "status": "Active / Repaying",
+      "challenge": "Gwaram processing clusters relied exclusively on fossil fuels. Diesel costs exceeding ₦1,200/liter eroded SME margins by 45%. Meanwhile, the local mini-grid suffered from low daytime utilization, threatening its long-term viability.",
+      "solution": "AgAsset Co deployed 5 industrial-grade electric rice hullers through a lease-to-own structure. These machines act as Anchor Loads, providing the grid with consistent daytime demand while slashing energy costs for the processors.",
+      "outcome": "100% clean energy transition across the hub. Average processor income has increased by 35% within the first 6 months of operation.",
+      "totalAssetValue": "₦245,000,000",
+      "beneficiaries": "15 SMEs",
+      "spv": "AgAsset SPV-01",
+      "specs": [
+        {
+          "label": "Financing Model",
+          "val": "Lease-to-Own",
+          "sub": "24 Month Term",
+          "icon": "Briefcase",
+          "details": "A structured financing arrangement where SMEs pay off the asset through daily or weekly installments aligned with their production cycles. Title transfers upon final payment."
+        },
+        {
+          "label": "Credit Enhancement",
+          "val": "IoT Lockout",
+          "sub": "20% Down-payment",
+          "icon": "ShieldCheck",
+          "details": "Automated risk mitigation via integrated firmware that allows for remote asset immobilization in the event of default, reducing the need for physical collateral."
+        },
+        {
+          "label": "Current Ownership",
+          "val": "AgAsset Co",
+          "sub": "Special Purpose Vehicle",
+          "icon": "Layers",
+          "details": "Assets are held within a Ring-Fenced SPV to ensure investor protection and balance sheet optimization during the repayment lifecycle."
+        },
+        {
+          "label": "Equipment Profile",
+          "val": "5x 10HP Hullers",
+          "sub": "Industrial Grade",
+          "icon": "Cog",
+          "details": "Equipped with high-efficiency copper-wound motors designed for continuous operation in high-temperature environments, maximizing throughput."
+        },
+        {
+          "label": "Grid Integration",
+          "val": "3-Phase AC",
+          "sub": "Smart Metered Hub",
+          "icon": "Zap",
+          "details": "Fully integrated into the local mini-grid with smart metering that allows for real-time load synchronization and daytime energy optimization."
+        },
+        {
+          "label": "Daily Runtime",
+          "val": "6.5 Hours",
+          "sub": "Peak Solar Optimized",
+          "icon": "Clock",
+          "details": "Operational schedule curated to coincide with peak photovoltaic generation, minimizing strain on battery storage and ensuring lowest energy costs."
+        }
+      ],
+      "metrics": [
+        {
+          "to": 35,
+          "suffix": "%",
+          "label": "Income Increase",
+          "desc": "Net growth in processor profit margins.",
+          "icon": "TrendingUp"
+        },
+        {
+          "to": 4.5,
+          "suffix": "T",
+          "label": "Daily Output",
+          "desc": "Tons of rice processed per single shift.",
+          "icon": "Cog"
+        },
+        {
+          "to": 12.5,
+          "suffix": "k",
+          "label": "Fuel Displaced",
+          "desc": "Liters of diesel removed from the cycle.",
+          "icon": "Fuel"
+        },
+        {
+          "to": 15,
+          "suffix": "",
+          "label": "Jobs Created",
+          "desc": "New direct processing and logistics roles.",
+          "icon": "Users"
+        }
+      ],
+      "gallery": [
+        "https://images.unsplash.com/photo-1625246333195-58197bd47f3b?q=80&w=2940&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2940&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2940&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?q=80&w=2940&auto=format&fit=crop"
+      ],
+      "timeline": [
+        { "date": "Jan 2024", "title": "Origination", "desc": "Feasibility study and credit vetting." },
+        { "date": "Apr 2024", "title": "Deployment", "desc": "Technical installation of huller units." },
+        { "date": "Oct 2024", "title": "Management", "desc": "Uptime: 99.2% | Repayment: On-Track." }
+      ],
+      "sdgs": [1, 7, 8, 9, 13]
+    },
+    "03": {
+      "id": "NG-ELE-003",
+      "title": "Eleuma PUE Hub.",
+      "location": "Multi-Site Deployment • Nigeria",
+      "heroImage": "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=2940&auto=format&fit=crop",
+      "structure": "Lease-to-Own",
+      "partner": "Eleuma",
+      "date": "Q1 2025",
+      "status": "Active / Repaying",
+      "challenge": "In many emerging markets, operators of income-generating activities are hindered by labor-intensive manual processes or expensive diesel-powered machinery. These traditional methods result in significant time loss and limited productivity, stifling the economic growth of rural communities and operators.",
+      "solution": "The project deploys Productive Use Equipment (PUE), such as agricultural millers and water pumps, powered by renewable energy sources like solar mini-grids. By switching to electric sources, operators significantly reduce labor and processing time while enhancing productivity, output capacity, and daily revenue.",
+      "outcome": "Two PUE units deployed across two sites with ₦70m in structured lease-to-own financing. Operators achieved a 5x increase in daily output and revenue within the first quarter of operation.",
+      "totalAssetValue": "₦70,000,000",
+      "beneficiaries": "2 Operator Sites",
+      "spv": "AgAsset SPV-03",
+      "specs": [
+        {
+          "label": "Financing Model",
+          "val": "Lease-to-Own",
+          "sub": "24 Month Term",
+          "icon": "Briefcase",
+          "details": "A structured financing arrangement where operators pay off equipment through installments aligned with their production cycles. Title transfers upon final payment."
+        },
+        {
+          "label": "Credit Enhancement",
+          "val": "IoT Lockout",
+          "sub": "20% Down-payment",
+          "icon": "ShieldCheck",
+          "details": "Automated risk mitigation via integrated firmware allowing remote asset immobilization in the event of default, reducing the need for physical collateral."
+        },
+        {
+          "label": "Current Ownership",
+          "val": "AgAsset Co",
+          "sub": "Special Purpose Vehicle",
+          "icon": "Layers",
+          "details": "Assets are held within a ring-fenced SPV to ensure investor protection and balance sheet optimization during the repayment lifecycle."
+        },
+        {
+          "label": "Equipment Profile",
+          "val": "Millers & Pumps",
+          "sub": "2 PUE Units",
+          "icon": "Cog",
+          "details": "Electric agricultural millers and water pumps replacing diesel-powered equivalents, engineered for continuous operation on solar mini-grid power supply."
+        },
+        {
+          "label": "Energy Source",
+          "val": "Solar Mini-Grid",
+          "sub": "Off-Grid Powered",
+          "icon": "Zap",
+          "details": "Equipment integrated into existing solar mini-grid infrastructure, providing consistent clean energy and acting as anchor productive loads for daytime generation."
+        },
+        {
+          "label": "Daily Runtime",
+          "val": "8 Hours",
+          "sub": "Peak Solar Optimized",
+          "icon": "Clock",
+          "details": "Operational schedule curated to coincide with peak photovoltaic generation, minimizing battery storage strain and ensuring the lowest effective energy cost."
+        }
+      ],
+      "metrics": [
+        {
+          "to": 5,
+          "suffix": "x",
+          "label": "Output Increase",
+          "desc": "Increase in daily processing output and revenue per operator.",
+          "icon": "TrendingUp"
+        },
+        {
+          "to": 70,
+          "suffix": "m",
+          "label": "Financing (₦)",
+          "desc": "Total lease-to-own financing deployed across both sites.",
+          "icon": "Cog"
+        },
+        {
+          "to": 2,
+          "suffix": "",
+          "label": "Sites Active",
+          "desc": "PUE units commissioned across two operator locations.",
+          "icon": "Users"
+        },
+        {
+          "to": 100,
+          "suffix": "%",
+          "label": "Diesel Displaced",
+          "desc": "Full transition from fossil fuel to solar-powered operations.",
+          "icon": "Fuel"
+        }
+      ],
+      "gallery": [
+        "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2940&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=2940&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1625246333195-58197bd47f3b?q=80&w=2940&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?q=80&w=2940&auto=format&fit=crop"
+      ],
+      "timeline": [
+        { "date": "Q3 2024", "title": "Origination", "desc": "Feasibility study and equipment vendor selection." },
+        { "date": "Q1 2025", "title": "Deployment", "desc": "Installation of PUE units across two operator sites." },
+        { "date": "Present", "title": "Operations", "desc": "Output tracking, repayment monitoring, and utilization optimization." }
+      ],
+      "sdgs": [7, 8, 9]
+    },
+    "02": {
+      "id": "NG-KAD-002",
+      "title": "Kaduna Cold Chain Facility.",
+      "location": "Cluster B • Zaria, Kaduna State",
+      "heroImage": "https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=2874&auto=format&fit=crop",
+      "structure": "PUE-as-a-Service",
+      "partner": "Solar Refrigeration Ltd",
+      "date": "Q1 2024",
+      "status": "Active / Repaying",
+      "challenge": "Over 50% of tomato harvests in Zaria were lost within 48 hours due to extreme heat and zero cooling capacity. Farmers were forced to sell at \"distress prices\" to avoid total loss.",
+      "solution": "Deployment of 10 modular blast-cooling units powered by an integrated off-grid solar array. This allows farmers to preserve produce for up to 21 days while waiting for better market prices.",
+      "outcome": "Post-harvest spoilage reduced from 55% to less than 4%. Local market price stability improved by 22% during peak harvest cycles.",
+      "totalAssetValue": "₦180,000,000",
+      "beneficiaries": "500+ Smallholders",
+      "spv": "AgAsset SPV-02",
+      "specs": [
+        {
+          "label": "Financing Model",
+          "val": "Fee-Per-Crate",
+          "sub": "Pay-as-you-Store",
+          "icon": "Briefcase",
+          "details": "Users pay a small transaction fee per crate of produce stored, removing all upfront costs for farmers while generating consistent cashflow."
+        },
+        {
+          "label": "Thermal Storage",
+          "val": "Phase Change",
+          "sub": "Integrated Cold Bank",
+          "icon": "ShieldCheck",
+          "details": "Advanced cooling tech that stores 'cold' in specialized phase-change materials, allowing for temperature maintenance overnight without battery drain."
+        },
+        {
+          "label": "Asset Type",
+          "val": "Modular Blast",
+          "sub": "ISO-Certified Units",
+          "icon": "Layers",
+          "details": "Scalable modular units that can be transported and commissioned within 72 hours, designed for rapid deployment in high-yield agriculture zones."
+        },
+        {
+          "label": "Energy Source",
+          "val": "35kW Solar",
+          "sub": "Off-Grid Hybrid",
+          "icon": "Zap",
+          "details": "Dedicated solar array with lithium-ion backup ensures 24/7 climate control independently of the unreliable local power grid."
+        },
+        {
+          "label": "Temp Control",
+          "val": "2°C Stable",
+          "sub": "Precision Monitoring",
+          "icon": "Activity",
+          "details": "Ultra-precise thermostat controls maintaining produce at optimal metabolic dormancy to extend shelf life without freezing damage."
+        },
+        {
+          "label": "SME Access",
+          "val": "Community App",
+          "sub": "Real-time Booking",
+          "icon": "Clock",
+          "details": "Digital reservation system where cooperatives can book cooling space in advance, optimizing facility utilization and farmer schedules."
+        }
+      ],
+      "metrics": [
+        {
+          "to": 95,
+          "suffix": "%",
+          "label": "Spoilage Reduction",
+          "desc": "Eliminating post-harvest waste for perishables.",
+          "icon": "Droplets"
+        },
+        {
+          "to": 21,
+          "suffix": " Days",
+          "label": "Shelf Life",
+          "desc": "Maximum cold-storage preservation time.",
+          "icon": "Clock"
+        },
+        {
+          "to": 250,
+          "suffix": "T",
+          "label": "Monthly Capacity",
+          "desc": "Tons processed through the Zaria node.",
+          "icon": "Cog"
+        },
+        {
+          "to": 120,
+          "suffix": "",
+          "label": "Subscriptions",
+          "desc": "Smallholder groups using PUE-as-a-Service.",
+          "icon": "Users"
+        }
+      ],
+      "gallery": [
+        "https://images.unsplash.com/photo-1586771107445-d3ca888129ff?q=80&w=2944&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1605000797499-95a51c5269ae?q=80&w=2942&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1591857177580-dc82b9ac4e10?q=80&w=2071&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1621460244018-8f192931448b?q=80&w=2940&auto=format&fit=crop"
+      ],
+      "timeline": [
+        { "date": "Nov 2023", "title": "Strategic Planning", "desc": "Site mapping for tomato corridors." },
+        { "date": "Feb 2024", "title": "Commissioning", "desc": "Deployment of 10 modular blast units." },
+        { "date": "Present", "title": "Expansion", "desc": "Planning for 5 additional nodes in Kaduna." }
+      ],
+      "sdgs": [1, 7, 8, 9, 13]
+    }
+  },
+  "idMap": {
+    "imo": "01",
+    "kaduna": "02",
+    "ogun": "02",
+    "benue": "01",
+    "niger": "01",
+    "kano": "02",
+    "01": "01",
+    "02": "02",
+    "03": "03",
+    "eleuma": "03"
+  },
+  "sdgMap": {
+    "1":  { "name": "No Poverty",                                    "color": "#E5243B" },
+    "2":  { "name": "Zero Hunger",                                   "color": "#DDA63A" },
+    "7":  { "name": "Affordable and Clean Energy",                   "color": "#FDB713" },
+    "8":  { "name": "Decent Work and Economic Growth",               "color": "#A21942" },
+    "9":  { "name": "Industry, Innovation and Infrastructure",       "color": "#FD6925" },
+    "12": { "name": "Responsible Consumption and Production",        "color": "#BF8B2E" },
+    "13": { "name": "Climate Action",                                "color": "#3F7E44" }
+  }
+}

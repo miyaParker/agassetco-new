@@ -229,15 +229,18 @@ const PortfolioPage: React.FC<PortfolioPageProps> = ({ onNavigate, data }) => {
               className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
             >
               <AnimatePresence mode='popLayout'>
-                {filteredProjects.map((project) => (
-                  <motion.div 
+                {filteredProjects.map((project, index) => (
+                  <motion.div
                     layout
                     key={project.id}
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.9 }}
                     transition={{ duration: 0.5 }}
-                    onClick={() => onNavigate?.('project-detail', project.id)}
+                    onClick={() => {
+                      const id = project.slug || String(index + 1).padStart(2, '0');
+                      onNavigate?.('project-detail', id);
+                    }}
                     className="group bg-white rounded-[0.7rem] overflow-hidden border border-gray-100 shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 cursor-pointer"
                   >
                     <div className="aspect-[4/3] overflow-hidden relative bg-ag-green-950/5">
@@ -291,13 +294,16 @@ const PortfolioPage: React.FC<PortfolioPageProps> = ({ onNavigate, data }) => {
           {viewMode === 'accordion' && (
             <div className="flex flex-col border-t border-gray-200">
               <AnimatePresence mode='popLayout'>
-                {filteredProjects.map((project) => (
-                  <ProjectAccordionRow 
-                    key={project.id} 
-                    project={project} 
+                {filteredProjects.map((project, index) => (
+                  <ProjectAccordionRow
+                    key={project.id}
+                    project={project}
                     isOpen={activeProjectId === project.id}
                     onClick={() => setActiveProjectId(activeProjectId === project.id ? null : project.id)}
-                    onDetailClick={() => onNavigate?.('project-detail', project.id)}
+                    onDetailClick={() => {
+                      const id = project.slug || String(index + 1).padStart(2, '0');
+                      onNavigate?.('project-detail', id);
+                    }}
                   />
                 ))}
               </AnimatePresence>

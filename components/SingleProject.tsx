@@ -26,6 +26,7 @@ import {
   Info
 } from 'lucide-react';
 import SectionHeader from './SectionHeader';
+import type { ProjectDetail } from '@/lib/strapi';
 
 // --- DATA ---
 
@@ -68,6 +69,46 @@ const PROJECTS_DATA: Record<string, any> = {
         { date: 'Jan 2024', title: 'Origination', desc: 'Feasibility study and credit vetting.' },
         { date: 'Apr 2024', title: 'Deployment', desc: 'Technical installation of huller units.' },
         { date: 'Oct 2024', title: 'Management', desc: 'Uptime: 99.2% | Repayment: On-Track.' }
+    ]
+  },
+  '03': {
+    id: 'NG-ELE-003',
+    title: 'Eleuma PUE Hub.',
+    location: 'Multi-Site Deployment • Nigeria',
+    heroImage: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=2940&auto=format&fit=crop',
+    structure: 'Lease-to-Own',
+    partner: 'Eleuma',
+    date: 'Q1 2025',
+    challenge: 'In many emerging markets, operators of income-generating activities are hindered by labor-intensive manual processes or expensive diesel-powered machinery. These traditional methods result in significant time loss and limited productivity, stifling the economic growth of rural communities and operators.',
+    solution: 'The project deploys Productive Use Equipment (PUE), such as agricultural millers and water pumps, powered by renewable energy sources like solar mini-grids. By switching to electric sources, operators significantly reduce labor and processing time while enhancing productivity, output capacity, and daily revenue.',
+    outcome: 'Two PUE units deployed across two sites with ₦70m in structured lease-to-own financing. Operators achieved a 5x increase in daily output and revenue within the first quarter of operation.',
+    totalAssetValue: '₦70,000,000',
+    beneficiaries: '2 Operator Sites',
+    spv: 'AgAsset SPV-03',
+    specs: [
+        { label: "Financing Model", val: "Lease-to-Own", sub: "24 Month Term", icon: Briefcase, details: "A structured financing arrangement where operators pay off equipment through installments aligned with their production cycles. Title transfers upon final payment." },
+        { label: "Credit Enhancement", val: "IoT Lockout", sub: "20% Down-payment", icon: ShieldCheck, details: "Automated risk mitigation via integrated firmware allowing remote asset immobilization in the event of default, reducing the need for physical collateral." },
+        { label: "Current Ownership", val: "AgAsset Co", sub: "Special Purpose Vehicle", icon: Layers, details: "Assets are held within a ring-fenced SPV to ensure investor protection and balance sheet optimization during the repayment lifecycle." },
+        { label: "Equipment Profile", val: "Millers & Pumps", sub: "2 PUE Units", icon: Cog, details: "Electric agricultural millers and water pumps replacing diesel-powered equivalents, engineered for continuous operation on solar mini-grid power supply." },
+        { label: "Energy Source", val: "Solar Mini-Grid", sub: "Off-Grid Powered", icon: Zap, details: "Equipment integrated into existing solar mini-grid infrastructure, providing consistent clean energy and acting as anchor productive loads for daytime generation." },
+        { label: "Daily Runtime", val: "8 Hours", sub: "Peak Solar Optimized", icon: Clock, details: "Operational schedule curated to coincide with peak photovoltaic generation, minimizing battery storage strain and ensuring the lowest effective energy cost." },
+    ],
+    metrics: [
+        { to: 5, suffix: "x", label: "Output Increase", desc: "Increase in daily processing output and revenue per operator.", icon: TrendingUp },
+        { to: 70, suffix: "m", label: "Financing (₦)", desc: "Total lease-to-own financing deployed across both sites.", icon: Cog },
+        { to: 2, suffix: "", label: "Sites Active", desc: "PUE units commissioned across two operator locations.", icon: Users },
+        { to: 100, suffix: "%", label: "Diesel Displaced", desc: "Full transition from fossil fuel to solar-powered operations.", icon: Fuel },
+    ],
+    gallery: [
+        'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2940&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=2940&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1625246333195-58197bd47f3b?q=80&w=2940&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1472214103451-9374bd1c798e?q=80&w=2940&auto=format&fit=crop'
+    ],
+    timeline: [
+        { date: 'Q3 2024', title: 'Origination', desc: 'Feasibility study and equipment vendor selection.' },
+        { date: 'Q1 2025', title: 'Deployment', desc: 'Installation of PUE units across two operator sites.' },
+        { date: 'Present', title: 'Operations', desc: 'Output tracking, repayment monitoring, and utilization optimization.' }
     ]
   },
   '02': {
@@ -127,16 +168,50 @@ const SDG_MAP: Record<number, { name: string; color: string }> = {
 const ID_MAP: Record<string, string> = {
     'imo': '01',
     'kaduna': '02',
-    'ogun': '02', 
+    'ogun': '02',
     'benue': '01',
-    'niger': '01', 
-    'kano': '02',   
+    'niger': '01',
+    'kano': '02',
+    'eleuma': '03',
     '01': '01',
     '02': '02',
-    '03': '01'
+    '03': '03',
 };
 
 const FALLBACK_ID = '01';
+
+// Map CMS icon name strings → Lucide components
+const ICON_MAP: Record<string, React.ComponentType<{ className?: string }>> = {
+  Briefcase, ShieldCheck, Layers, Cog, Zap, Clock, TrendingUp, Fuel, Users, Droplets, Activity, MapPin, Info,
+};
+
+function resolveIcon(name: string | null | undefined): React.ComponentType<{ className?: string }> {
+  return (name && ICON_MAP[name]) || Cog;
+}
+
+function buildCmsProject(d: ProjectDetail) {
+  return {
+    id: d.projectId ?? d.documentId,
+    title: d.title,
+    location: d.location ?? '',
+    heroImage: d.heroImage ?? '',
+    structure: d.structure ?? '',
+    status: d.status ?? d.structure ?? '',
+    partner: d.partner ?? '',
+    date: d.date ?? '',
+    challenge: d.challenge ?? '',
+    solution: d.solution ?? '',
+    outcome: d.outcome ?? '',
+    totalAssetValue: d.totalAssetValue ?? '',
+    beneficiaries: d.beneficiaries ?? '',
+    spv: d.spv ?? '',
+    specs: (d.specs ?? []).map(s => ({ ...s, icon: resolveIcon(s.icon) })),
+    metrics: (d.metrics ?? []).map(m => ({ ...m, icon: resolveIcon(m.icon) })),
+    gallery: d.gallery ?? [],
+    timeline: d.timeline ?? [],
+    sdgs: d.sdgs ?? [],
+  };
+}
 
 // --- SUB-COMPONENTS ---
 
@@ -241,16 +316,21 @@ const EfficiencyDashboard = () => (
 
 interface SingleProjectProps {
   projectId?: string | number | null;
+  projectData?: ProjectDetail | null;
   onNavigate?: (page: any, id?: any) => void;
 }
 
-const SingleProject: React.FC<SingleProjectProps> = ({ projectId, onNavigate }) => {
+const SingleProject: React.FC<SingleProjectProps> = ({ projectId, projectData, onNavigate }) => {
   const [activeSubnav, setActiveSubnav] = useState('context');
   const [expandedSpecIndex, setExpandedSpecIndex] = useState<number>(0);
-  
-  const idStr = projectId ? String(projectId) : FALLBACK_ID;
-  const dataKey = ID_MAP[idStr] || FALLBACK_ID;
-  const project = PROJECTS_DATA[dataKey] || PROJECTS_DATA[FALLBACK_ID];
+
+  const project = projectData
+    ? buildCmsProject(projectData)
+    : (() => {
+        const idStr = projectId ? String(projectId) : FALLBACK_ID;
+        const dataKey = ID_MAP[idStr] || FALLBACK_ID;
+        return PROJECTS_DATA[dataKey] || PROJECTS_DATA[FALLBACK_ID];
+      })();
 
   const subnavItems = [
     { id: 'context', label: '01 CONTEXT' },
@@ -643,7 +723,7 @@ const SingleProject: React.FC<SingleProjectProps> = ({ projectId, onNavigate }) 
              </div>
              
              <div className="flex flex-wrap justify-center gap-10 opacity-80 hover:opacity-100 transition-opacity">
-                {[1, 7, 8, 9, 13].map((num) => (
+                {(project.sdgs?.length ? project.sdgs : [1, 7, 8, 9, 13]).map((num) => (
                   <SDGTooltip key={num} id={num}>
                     <motion.div 
                         whileHover={{ scale: 1.1, rotate: 5 }}

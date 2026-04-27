@@ -1,12 +1,14 @@
 import { strapiGet } from '../client';
-import { 
-  Section, 
+import {
+  Section,
   PortfolioHeroSection,
   ReachSection,
   CaseStudiesSection,
   ValidationSection,
   TheChallengeSection,
-  StrapiSingleResponse
+  StrapiSingleResponse,
+  StrapiListResponse,
+  ProjectDetail,
 } from '../types';
 
 export interface PortfolioPageData {
@@ -64,3 +66,23 @@ export function getValidationSection(sections: Section[]): ValidationSection | u
 // export function getTheChallengeSection(sections: Section[]): TheChallengeSection | undefined {
 //   return findSection<TheChallengeSection>(sections, 'sections.the-challenge');
 // }
+
+export async function getProjectBySlug(slug: string): Promise<ProjectDetail | null> {
+  try {
+    const response = await strapiGet<StrapiListResponse<ProjectDetail>>('/projects', {
+      params: {
+        'filters[slug][$eq]': slug,
+        'filters[publishedAt][$notNull]': 'true',
+        'populate[specs]': '*',
+        'populate[metrics]': '*',
+        'populate[timeline]': '*',
+      },
+      revalidate: 60,
+      tags: [`project-${slug}`],
+    });
+    return response.data[0] ?? null;
+  } catch (error) {
+    console.error(`[Strapi] Error fetching project by slug "${slug}":`, error);
+    return null;
+  }
+}

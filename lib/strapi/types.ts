@@ -127,7 +127,7 @@ export interface Project {
   solution: string;
   core_impact: string[];
   sdg_impact: number[];
-  cta_url: string | null;
+  slug: string | null;
   categories: string[];
   images: StrapiMedia[];
 }
@@ -266,4 +266,68 @@ export interface HomePageData {
 export interface StrapiSingleResponse<T> {
   data: T;
   meta: Record<string, unknown>;
+}
+
+export interface StrapiListResponse<T> {
+  data: T[];
+  meta: {
+    pagination: {
+      page: number;
+      pageSize: number;
+      pageCount: number;
+      total: number;
+    };
+  };
+}
+
+// --- Project detail (collection type) ---
+
+export interface ProjectSpec {
+  id: number;
+  label: string | null;
+  val: string | null;
+  sub: string | null;
+  icon: string | null;
+  details: string | null;
+}
+
+export interface ProjectMetric {
+  id: number;
+  to: number | null;
+  suffix: string | null;
+  label: string | null;
+  desc: string | null;
+  icon: string | null;
+}
+
+export interface ProjectTimelineStep {
+  id: number;
+  date: string | null;
+  title: string | null;
+  desc: string | null;
+}
+
+export interface ProjectDetail {
+  id: number;
+  documentId: string;
+  projectId: string | null;
+  title: string;
+  slug: string;
+  location: string | null;
+  heroImage: string | null;
+  structure: string | null;
+  partner: string | null;
+  date: string | null;
+  status: string | null;
+  challenge: string | null;
+  solution: string | null;
+  outcome: string | null;
+  totalAssetValue: string | null;
+  beneficiaries: string | null;
+  spv: string | null;
+  specs: ProjectSpec[];
+  metrics: ProjectMetric[];
+  gallery: string[] | null;
+  timeline: ProjectTimelineStep[];
+  sdgs: number[] | null;
 }

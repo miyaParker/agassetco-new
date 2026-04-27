@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Link from 'next/link';
 import { ArrowUpRight, Plus, Minus, CheckCircle2 } from 'lucide-react';
 import SectionHeader from './SectionHeader';
 import type { OurProjectsSection } from '@/lib/strapi/types';
@@ -44,7 +45,6 @@ const Portfolio: React.FC<PortfolioProps> = ({ data, onNavigate }) => {
               index={index}
               isOpen={activeId === project.id}
               onClick={() => setActiveId(activeId === project.id ? null : project.id)}
-              onDetailClick={() => onNavigate?.('project-detail', project.id)}
             />
           ))}
         </div>
@@ -62,10 +62,9 @@ interface ProjectRowProps {
   index: number;
   isOpen: boolean;
   onClick: () => void;
-  onDetailClick?: () => void;
 }
 
-const ProjectRow: React.FC<ProjectRowProps> = ({ project, index, isOpen, onClick, onDetailClick }) => {
+const ProjectRow: React.FC<ProjectRowProps> = ({ project, index, isOpen, onClick }) => {
   const indexLabel = String(index + 1).padStart(2, '0');
 
   return (
@@ -100,7 +99,17 @@ const ProjectRow: React.FC<ProjectRowProps> = ({ project, index, isOpen, onClick
             ))}
           </div>
 
-          <div className="md:ml-4 text-gray-400 group-hover:text-ag-green-950 transition-colors">
+          {project.slug && (
+            <Link
+              href={`/portfolio/${project.slug}`}
+              onClick={(e) => e.stopPropagation()}
+              className="md:flex hidden items-center gap-1.5 text-[9px] font-bold uppercase tracking-[0.2em] text-gray-400 hover:text-ag-lime transition-colors"
+            >
+              View Project
+              <ArrowUpRight className="w-3.5 h-3.5" />
+            </Link>
+          )}
+          <div className="md:ml-2 text-gray-400 group-hover:text-ag-green-950 transition-colors">
             {isOpen ? <Minus className="w-5 h-5" /> : <Plus className="w-5 h-5" />}
           </div>
         </div>
@@ -195,17 +204,15 @@ const ProjectRow: React.FC<ProjectRowProps> = ({ project, index, isOpen, onClick
                       ))}
                     </div>
 
-                    {project.cta_url && (
-                      <motion.button
-                        initial={{ opacity: 0, x: -10 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.4 }}
-                        onClick={(e) => { e.stopPropagation(); onDetailClick?.(); }}
+                    {project.slug && (
+                      <Link
+                        href={`/portfolio/${project.slug}`}
+                        onClick={(e) => e.stopPropagation()}
                         className="shrink-0 text-[10px] font-bold text-ag-green-950 uppercase tracking-[0.25em] flex items-center gap-2 hover:text-ag-lime transition-all group/btn"
                       >
                         Full Case Study
                         <ArrowUpRight className="w-4 h-4 group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform" />
-                      </motion.button>
+                      </Link>
                     )}
                   </div>
                 </div>
