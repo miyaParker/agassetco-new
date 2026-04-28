@@ -57,14 +57,14 @@ const Portfolio: React.FC<PortfolioProps> = ({ data, onNavigate }) => {
   );
 };
 
-interface ProjectRowProps {
+export interface ProjectRowProps {
   project: OurProjectsSection['project'][0];
   index: number;
   isOpen: boolean;
   onClick: () => void;
 }
 
-const ProjectRow: React.FC<ProjectRowProps> = ({ project, index, isOpen, onClick }) => {
+export const ProjectRow: React.FC<ProjectRowProps> = ({ project, index, isOpen, onClick }) => {
   const indexLabel = String(index + 1).padStart(2, '0');
 
   return (

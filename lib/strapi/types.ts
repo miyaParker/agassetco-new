@@ -226,10 +226,8 @@ export interface CaseStudiesSection {
   __component: 'sections.case-studies';
   id: number;
   title: string | null;
-  categories: {
-    id: number;
-    name: string | null;
-  }[] | null;
+  sectionLabel: string | null;
+  categories: string[] | null;
   projects: Project[] | null;
 }
 

@@ -5,7 +5,6 @@ import {
   ReachSection,
   CaseStudiesSection,
   ValidationSection,
-  TheChallengeSection,
   StrapiSingleResponse,
   StrapiListResponse,
   ProjectDetail,
@@ -22,14 +21,11 @@ export async function getPortfolioPage(): Promise<PortfolioPageData> {
   try {
     const response = await strapiGet<StrapiSingleResponse<PortfolioPageData>>('/portfolio-page', {
       params: {
-        // Shallow-populate all dynamic zone sections (picks up simple fields)
-        'populate[PortfolioSections][populate]': '*',
-        // Deep-populate nested relations per component
-        'populate[PortfolioSections][on][sections.portfolio-hero][populate]': '*',
-        'populate[PortfolioSections][on][sections.reach][populate][projects_showcase][populate]': '*',
         'populate[PortfolioSections][on][sections.case-studies][populate][projects][populate]': '*',
-        'populate[PortfolioSections][on][sections.the-challenge][populate][challenge_card][populate]': '*',
-        'populate[PortfolioSections][on][sections.validation][populate][validation_cards][populate]': '*',
+        'populate[PortfolioSections][on][sections.portfolio-hero][populate]': '*',
+        'populate[PortfolioSections][on][sections.reach][populate]': '*',
+        'populate[PortfolioSections][on][sections.the-challenge][populate]': '*',
+        'populate[PortfolioSections][on][sections.validation][populate]': '*',
       },
       revalidate: 60,
       tags: ['portfolio-page'],
@@ -66,6 +62,24 @@ export function getValidationSection(sections: Section[]): ValidationSection | u
 // export function getTheChallengeSection(sections: Section[]): TheChallengeSection | undefined {
 //   return findSection<TheChallengeSection>(sections, 'sections.the-challenge');
 // }
+
+export async function getProjects(): Promise<ProjectDetail[]> {
+  try {
+    const response = await strapiGet<StrapiListResponse<ProjectDetail>>('/projects', {
+      params: {
+        'filters[publishedAt][$notNull]': 'true',
+        'pagination[pageSize]': '100',
+        'sort': 'createdAt:desc',
+      },
+      revalidate: 60,
+      tags: ['projects'],
+    });
+    return response.data;
+  } catch (error) {
+    console.error('[Strapi] Error fetching projects:', error);
+    return [];
+  }
+}
 
 export async function getProjectBySlug(slug: string): Promise<ProjectDetail | null> {
   try {

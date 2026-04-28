@@ -400,7 +400,8 @@ const SingleProject: React.FC<SingleProjectProps> = ({ projectId, projectData, o
             loading="eager"
             fetchPriority="high"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-ag-green-950 via-ag-green-950/40 to-transparent" />
+          <div className="absolute inset-0 bg-ag-green-950/50" />
+          <div className="absolute inset-0 bg-gradient-to-t from-ag-green-950 via-ag-green-950/20 to-transparent" />
         </div>
 
         {/* BREADCRUMBS & BACK */}

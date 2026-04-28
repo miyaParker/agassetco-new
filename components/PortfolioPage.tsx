@@ -3,17 +3,15 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  ArrowUpRight, 
-  MapPin, 
-  CheckCircle2, 
-  Download, 
-  Plus, 
-  Minus,
-  Building2, 
-  Zap, 
-  TrendingUp, 
-  Activity, 
+import {
+  ArrowUpRight,
+  MapPin,
+  CheckCircle2,
+  Download,
+  Building2,
+  Zap,
+  TrendingUp,
+  Activity,
   ShieldCheck,
   ChevronRight,
   Home,
@@ -24,9 +22,12 @@ import {
 import SectionHeader from './SectionHeader';
 import InteractiveMapSection from './InteractiveMapSection';
 import ProblemSolution from './ProblemSolution';
+import { ProjectRow } from './Portfolio';
 import {
   PortfolioPageData,
   Project,
+  ProjectDetail,
+  StrapiMedia,
   getPortfolioHeroSection,
   getReachSection,
   getCaseStudiesSection,
@@ -35,17 +36,36 @@ import {
   strapiMediaUrl,
 } from '@/lib/strapi';
 
+function makeMedia(url: string): StrapiMedia {
+  return { id: 0, documentId: '', name: '', alternativeText: null, url, width: null, height: null, formats: null, ext: '', mime: '', size: 0 };
+}
+
+function adaptProject(d: ProjectDetail): Project {
+  const imageUrls = [d.heroImage, ...(d.gallery ?? [])].filter(Boolean) as string[];
+  return {
+    id: d.id,
+    title: d.title,
+    country: d.location ?? '',
+    year: d.date ?? '',
+    challenge: d.challenge ?? '',
+    solution: d.solution ?? '',
+    core_impact: (d.metrics ?? []).map(m => m.label ?? '').filter(Boolean),
+    sdg_impact: d.sdgs ?? [],
+    slug: d.slug,
+    categories: [],
+    images: imageUrls.map(makeMedia),
+  };
+}
+
 interface PortfolioPageProps {
   onNavigate?: (page: any, id?: any) => void;
   data?: PortfolioPageData | null;
+  projects?: ProjectDetail[];
 }
 
 
-const SDG_COLORS: Record<number, string> = {
-  1: "#E5243B", 2: "#DDA63A", 7: "#FDB713", 8: "#A21942", 9: "#FD6925", 12: "#BF8B2E", 13: "#3F7E44"
-};
 
-const PortfolioPage: React.FC<PortfolioPageProps> = ({ onNavigate, data }) => {
+const PortfolioPage: React.FC<PortfolioPageProps> = ({ onNavigate, data, projects: projectsProp }) => {
   const sections = data?.PortfolioSections || [];
   const heroData = getPortfolioHeroSection(sections);
   const reachData = getReachSection(sections);
@@ -53,7 +73,9 @@ const PortfolioPage: React.FC<PortfolioPageProps> = ({ onNavigate, data }) => {
   const validationData = getValidationSection(sections);
   const challengeData = getTheChallengeSection(sections);
 
-  const projects: Project[] = caseStudiesData?.projects || [];
+  const projects: Project[] = caseStudiesData?.projects?.length
+    ? caseStudiesData.projects
+    : (projectsProp?.map(adaptProject) ?? []);
   const allCategories = ['All', ...Array.from(new Set(projects.flatMap(p => p.categories || [])))];
 
   const [activeTab, setActiveTab] = useState('All');
@@ -185,7 +207,7 @@ const PortfolioPage: React.FC<PortfolioPageProps> = ({ onNavigate, data }) => {
       <section className="py-24 bg-white border-t border-gray-100">
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
-            <SectionHeader number="02" category="Case Studies" title={caseStudiesData?.title || "Proof of Concept."} />
+            <SectionHeader number="02" category={caseStudiesData?.sectionLabel || "Case Studies"} title={caseStudiesData?.title || "Proof of Concept."} />
             
             <div className="flex items-center gap-2 bg-gray-50 p-1.5 rounded-full border border-gray-100 self-start md:self-auto md:mb-24">
               <button 
@@ -238,8 +260,7 @@ const PortfolioPage: React.FC<PortfolioPageProps> = ({ onNavigate, data }) => {
                     exit={{ opacity: 0, scale: 0.9 }}
                     transition={{ duration: 0.5 }}
                     onClick={() => {
-                      const id = project.slug || String(index + 1).padStart(2, '0');
-                      onNavigate?.('project-detail', id);
+                      if (project.slug) onNavigate?.('project-detail', project.slug);
                     }}
                     className="group bg-white rounded-[0.7rem] overflow-hidden border border-gray-100 shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 cursor-pointer"
                   >
@@ -295,15 +316,12 @@ const PortfolioPage: React.FC<PortfolioPageProps> = ({ onNavigate, data }) => {
             <div className="flex flex-col border-t border-gray-200">
               <AnimatePresence mode='popLayout'>
                 {filteredProjects.map((project, index) => (
-                  <ProjectAccordionRow
+                  <ProjectRow
                     key={project.id}
                     project={project}
+                    index={index}
                     isOpen={activeProjectId === project.id}
                     onClick={() => setActiveProjectId(activeProjectId === project.id ? null : project.id)}
-                    onDetailClick={() => {
-                      const id = project.slug || String(index + 1).padStart(2, '0');
-                      onNavigate?.('project-detail', id);
-                    }}
                   />
                 ))}
               </AnimatePresence>
@@ -534,152 +552,5 @@ const PortfolioPage: React.FC<PortfolioPageProps> = ({ onNavigate, data }) => {
   );
 };
 
-// --- SUB-COMPONENTS ---
-
-interface ProjectAccordionRowProps {
-  project: Project;
-  isOpen: boolean;
-  onClick: () => void;
-  onDetailClick?: () => void;
-}
-
-const ProjectAccordionRow: React.FC<ProjectAccordionRowProps> = ({ project, isOpen, onClick, onDetailClick }) => {
-  return (
-    <div className="border-b border-gray-200 group">
-      <div 
-        onClick={onClick}
-        className="w-full py-8 md:py-10 flex flex-col md:flex-row md:items-center justify-between gap-4 text-left hover:bg-gray-50 transition-colors duration-300 px-4 rounded-[0.7rem] my-2 cursor-pointer"
-      >
-        <div className="flex items-baseline gap-6 md:gap-12">
-          <span className="text-[10px] font-bold text-gray-300 uppercase tracking-widest font-sans hidden md:block">
-            / {project.id}
-          </span>
-          <h3 className={`text-2xl md:text-4xl font-medium tracking-tight transition-colors duration-300 ${isOpen ? 'text-ag-lime' : 'text-ag-green-950 group-hover:text-ag-green-700'}`}>
-            {project.title}
-          </h3>
-        </div>
-
-        <div className="flex flex-wrap md:flex-nowrap items-center gap-4 md:gap-8">
-          <div className="flex items-center gap-6 text-sm text-gray-500 font-medium tracking-wide">
-            <span>{project.country}</span>
-            <span className="w-1 h-1 bg-gray-300 rounded-full"></span>
-            <span>{project.year}</span>
-          </div>
-
-          <div className="flex flex-wrap gap-2">
-            {(project.categories || []).map(cat => (
-              <span key={cat} className="px-3 py-1 bg-ag-green-950 text-white text-[9px] font-bold uppercase tracking-widest rounded-full">
-                {cat}
-              </span>
-            ))}
-          </div>
-          
-          <div className="transition-transform duration-500">
-             {isOpen ? <Minus className="w-5 h-5 text-ag-lime" /> : <Plus className="w-5 h-5 text-gray-400 group-hover:text-ag-green-950" />}
-          </div>
-        </div>
-      </div>
-
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="overflow-hidden"
-          >
-            <div className="pb-16 pt-4 px-4">
-              <div className={`grid grid-cols-1 gap-12 ${project.images?.length ? 'lg:grid-cols-12' : ''}`}>
-
-                {project.images?.length > 0 && (
-                  <div className="lg:col-span-7 flex flex-col gap-4">
-                    <div className="grid grid-cols-2 gap-4 h-[220px]">
-                      <motion.div
-                        initial={{ scale: 0.95, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
-                        transition={{ delay: 0.1 }}
-                        className="relative rounded-[0.7rem] overflow-hidden shadow-lg h-full"
-                      >
-                        <img src={strapiMediaUrl(project.images[0].url)} alt="Detail 1" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" loading="eager" fetchPriority="high" />
-                      </motion.div>
-                      {project.images[1] && (
-                        <motion.div
-                          initial={{ scale: 0.95, opacity: 0 }}
-                          animate={{ scale: 1, opacity: 1 }}
-                          transition={{ delay: 0.2 }}
-                          className="relative rounded-[0.7rem] overflow-hidden shadow-lg h-full"
-                        >
-                          <img src={strapiMediaUrl(project.images[1].url)} alt="Detail 2" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" loading="eager" fetchPriority="high" />
-                        </motion.div>
-                      )}
-                    </div>
-                    {project.images[2] && (
-                      <motion.div
-                        initial={{ scale: 0.95, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
-                        transition={{ delay: 0.3 }}
-                        className="relative rounded-[0.7rem] overflow-hidden shadow-xl h-[260px]"
-                      >
-                        <img src={strapiMediaUrl(project.images[2].url)} alt="Detail 3 Landscape" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" loading="eager" fetchPriority="high" />
-                      </motion.div>
-                    )}
-                  </div>
-                )}
-
-                <div className={`${project.images?.length ? 'lg:col-span-5' : ''} flex flex-col justify-between py-2`}>
-                   <div className="space-y-10">
-                      <div>
-                        <h4 className="text-[10px] font-bold text-ag-lime uppercase tracking-[0.2em] mb-2">Challenge</h4>
-                        <p className="text-sm text-gray-500 font-light leading-relaxed">{project.challenge}</p>
-                      </div>
-                      <div>
-                        <h4 className="text-[10px] font-bold text-ag-lime uppercase tracking-[0.2em] mb-2">Strategic Intervention</h4>
-                        <p className="text-sm text-gray-500 font-light leading-relaxed">{project.solution}</p>
-                      </div>
-                      <div>
-                        <h4 className="text-[10px] font-bold text-ag-lime uppercase tracking-[0.2em] mb-2">Key Impact</h4>
-                        <ul className="space-y-2">
-                           {(project.core_impact || []).map((metric: string, i: number) => (
-                             <li key={i} className="flex items-center gap-3">
-                               <CheckCircle2 className="w-3.5 h-3.5 text-ag-lime" />
-                               <span className="text-sm text-ag-green-950 font-medium">{metric}</span>
-                             </li>
-                           ))}
-                        </ul>
-                      </div>
-                   </div>
-
-                  <div className="flex items-center justify-between mt-12 pt-8 border-t border-gray-100">
-                    <div className="flex items-center gap-3">
-                       <span className="text-[9px] font-bold text-gray-400 uppercase tracking-widest mr-2">Core SDGs:</span>
-                       {(project.sdg_impact || []).map((sdg: number) => (
-                         <div
-                           key={sdg}
-                           className="w-8 h-8 rounded flex items-center justify-center text-white text-[10px] font-bold shadow-sm transition-transform hover:scale-110 cursor-help"
-                           style={{ backgroundColor: SDG_COLORS[sdg] || '#ccc' }}
-                           title={`SDG Goal ${sdg}`}
-                         >
-                           {sdg}
-                         </div>
-                       ))}
-                    </div>
-
-                    <button
-                      onClick={(e) => { e.stopPropagation(); onDetailClick?.(); }}
-                      className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.25em] text-ag-green-950 hover:text-ag-lime transition-all group/btn"
-                    >
-                      Full Case Study <ArrowUpRight className="w-4 h-4 group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform" />
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  );
-};
 
 export default PortfolioPage;
